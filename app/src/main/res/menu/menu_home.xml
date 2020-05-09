@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_menu"
+        android:icon="@drawable/baseline_home_orange_24"
+        android:title="@string/home"
+        />
+
+    <item
+        android:id="@+id/categoria_menu"
+        android:icon="@drawable/ic_category"
+        android:title="@string/catbar"
+        />
+
+    <item
+        android:id="@+id/usuario_menu"
+        android:icon="@drawable/baseline_profile_grey_24"
+        android:title="@string/userbar"
+        />
+
+    <item
+        android:id="@+id/mensaje_menu"
+        android:icon="@drawable/mail"
+        android:title="@string/mensajesbar"
+        />
+
+    <item
+        android:id="@+id/buscar_menu"
+        android:icon="@drawable/baseline_search_grey_24"
+        android:title="@string/buscarbar"
+        />
+
+</menu>

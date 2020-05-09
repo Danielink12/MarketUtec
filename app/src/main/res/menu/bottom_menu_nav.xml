@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item android:id="@+id/home"
+        android:title="Home"
+        app:showAsAction="always"
+        android:orderInCategory="1"
+        android:icon="@drawable/baseline_home_orange_24"/>
+
+    <item android:id="@+id/login"
+        android:title="User"
+        app:showAsAction="always"
+        android:orderInCategory="2"
+        android:icon="@drawable/baseline_profile_grey_24"/>
+
+
+    <item android:id="@+id/more"
+        android:title="Buscar"
+        app:showAsAction="always"
+        android:orderInCategory="2"
+        android:icon="@drawable/baseline_search_grey_24"/>
+
+</menu>
