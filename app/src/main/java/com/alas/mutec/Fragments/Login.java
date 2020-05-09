@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.alas.mutec.Api.ApiClient;
 import com.alas.mutec.Api.ApiInterface;
+import com.alas.mutec.Api.LoginModel;
 import com.alas.mutec.Api.User;
 import com.alas.mutec.R;
 
@@ -98,7 +99,7 @@ public class Login extends Fragment {
     public void log(){
         String user = txtUser.getText().toString();
         String pass = txtPass.getText().toString();
-        Call<User> lg = apiInterface.login(user,pass);
+        Call<User> lg = apiInterface.login(new LoginModel(user,pass));
         lg.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, @NonNull Response<User> response) {
@@ -107,7 +108,7 @@ public class Login extends Fragment {
                     Toast.makeText(getContext(),response.raw().toString(),Toast.LENGTH_SHORT).show();
                     //  Log.d("resp",response);
                 }else{
-                    Toast.makeText(getContext(), response.raw().body().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), response.raw().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
