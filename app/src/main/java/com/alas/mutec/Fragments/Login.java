@@ -20,10 +20,12 @@ import com.alas.mutec.Api.LoginModel;
 import com.alas.mutec.Api.RegistroModel;
 import com.alas.mutec.Api.User;
 import com.alas.mutec.R;
+import com.google.gson.stream.JsonToken;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.GET;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,14 +104,13 @@ public class Login extends Fragment {
     public void log(){
         String user = txtUser.getText().toString();
         String pass = txtPass.getText().toString();
-        Call<User> lg = apiInterface.login(new LoginModel(user,pass));
-        lg.enqueue(new Callback<User>() {
+        Call<JsonToken> lg = apiInterface.login(new LoginModel(user,pass));
+        lg.enqueue(new Callback<JsonToken>() {
             @Override
-            public void onResponse(Call<User> call, @NonNull Response<User> response) {
+            public void onResponse(Call<JsonToken> call, @NonNull Response<JsonToken> response) {
 
                 if(response.isSuccessful()){
-                    Intent i = new Intent(getContext(),Home.class);
-                    startActivity(i);
+                    Toast.makeText(getContext(), "AWEFOOOOOO", Toast.LENGTH_SHORT).show();
 
                 }else{
                     Toast.makeText(getContext(), "else", Toast.LENGTH_SHORT).show();
@@ -117,7 +118,7 @@ public class Login extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<JsonToken> call, Throwable t) {
                 Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                 Log.d("RESP",t.toString());
             }

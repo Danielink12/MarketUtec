@@ -6,14 +6,30 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
-    String isLogin;
+    @SerializedName("Authorization")
+    private String Authorization;
 
-    public String getIsLogin() {
-        return isLogin;
+    @SerializedName("message")
+    private String msg;
+
+    public User(String authorization, String msg) {
+        Authorization = authorization;
+        this.msg = msg;
     }
 
-    public void setIsLogin(String username) {
-        this.isLogin = username;
+    public String getAuthorization() {
+        return Authorization;
     }
 
+    public void setAuthorization(String authorization) {
+        Authorization = authorization;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 }
