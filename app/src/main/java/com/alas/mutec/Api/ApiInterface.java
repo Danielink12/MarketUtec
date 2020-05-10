@@ -11,8 +11,8 @@ public interface ApiInterface {
 
     @Headers({"Content-Type: application/json;charset=utf-8"})
     @POST("/Android/API/Login/")
-    Call<JsonToken> login(@Body LoginModel loginModel);
+    Call<String> login(@Body LoginModel loginModel);
 
     @POST("Android/API/Registrar")
-    Call<User> registro(@Body RegistroModel registroModel);
+    Call<String> registro(@Body RegistroModel registroModel);
 }
