@@ -1,10 +1,12 @@
 package com.alas.mutec.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.alas.mutec.Api.ApiClient;
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.LoginModel;
+import com.alas.mutec.Api.RegistroModel;
 import com.alas.mutec.Api.User;
 import com.alas.mutec.R;
 
@@ -105,16 +108,34 @@ public class Login extends Fragment {
             public void onResponse(Call<User> call, @NonNull Response<User> response) {
 
                 if(response.isSuccessful()){
-                    Toast.makeText(getContext(),response.raw().toString(),Toast.LENGTH_SHORT).show();
-                    //  Log.d("resp",response);
+                    Intent i = new Intent(getContext(),Home.class);
+                    startActivity(i);
+
                 }else{
-                    Toast.makeText(getContext(), response.raw().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "else", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                Log.d("RESP",t.toString());
+            }
+        });
+
+    }
+
+    public void registro(){
+        Call<User> rg = apiInterface.registro(new RegistroModel());
+        rg.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
             }
         });
     }
