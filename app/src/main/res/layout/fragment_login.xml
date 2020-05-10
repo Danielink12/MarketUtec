@@ -20,10 +20,12 @@
             android:id="@+id/txtMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="Mail"
-            android:layout_gravity="center"/>
+            android:inputType="textPersonName"
+            android:text="25-2857-2018"
+            tools:text="25-2857-2018" />
 
         <Space
             android:layout_width="match_parent"
@@ -33,10 +35,12 @@
             android:id="@+id/txtPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
             android:layout_gravity="center"
-            android:hint="Password"/>
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:text="1234"
+            tools:text="1234" />
 
         <Space
             android:layout_width="match_parent"
