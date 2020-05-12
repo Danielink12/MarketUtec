@@ -6,22 +6,34 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alas.mutec.Api.ApiClient;
 import com.alas.mutec.Api.ApiInterface;
+import com.alas.mutec.Api.CarrerasModel;
 import com.alas.mutec.Api.RegistroModel;
 import com.alas.mutec.R;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +46,8 @@ public class Registro extends Fragment {
     View vista;
     EditText txtNombre,txtApellidos,txtCarnet,txtMail,txtTelefono,txtPass;
     Button Rbtn;
-    TextView txtbtn;
+    TextView txtbtn, txtResponse;
+    Spinner spinnerCarreras;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,6 +82,14 @@ public class Registro extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            Carreras();
+        }
+        catch (Exception ex){
+            Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+            Log.d("EL pedo",ex.toString());
+        }
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -89,6 +110,7 @@ public class Registro extends Fragment {
         txtPass = vista.findViewById(R.id.txtPass);
         Rbtn = vista.findViewById(R.id.Rbtn);
         txtbtn = vista.findViewById(R.id.txtbtn);
+        spinnerCarreras = vista.findViewById(R.id.spinnerCarreras);
 
         Rbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +129,8 @@ public class Registro extends Fragment {
 
                 // Commit a la transacción
                 transaction.commit();
+
+                Carreras();
             }
         });
 
@@ -138,5 +162,44 @@ public class Registro extends Fragment {
                 Toast.makeText(getContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void Carreras() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://13.66.170.249:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<CarrerasModel>> crs = jsonPlaceHolderApi.carreras();
+       crs.enqueue(new Callback<List<CarrerasModel>>() {
+           @Override
+           public void onResponse(Call<List<CarrerasModel>> call, Response<List<CarrerasModel>> response) {
+
+               List<CarrerasModel> posts = response.body();
+
+               String[] items = new String[posts.size()];
+               for(int i=0; i<posts.size(); i++){
+                   items[i] = posts.get(i).getNombre();
+               }
+               ArrayAdapter<String> adapter;
+               adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
+               spinnerCarreras.setAdapter(adapter);
+
+              /* for (CarrerasModel post : posts) {
+                   String content = "";
+                   content += "idcarrera: " + post.getIdcarrera() + "\n";
+                   content += "Nombre: " + post.getNombre() + "\n";
+                   content += "Descripcion: " + post.getDescripcion() + "\n";
+
+                   txtResponse.append(content);
+
+               } */
+
+           }
+
+           @Override
+           public void onFailure(Call<List<CarrerasModel>> call, Throwable t) {
+
+           }
+       });
     }
 }

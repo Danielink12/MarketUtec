@@ -23,12 +23,5 @@
         android:id="@+id/login"
         android:name="com.alas.mutec.Fragments.Login"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_login_to_more"
-            app:destination="@id/more" />
-        <action
-            android:id="@+id/action_login_to_more2"
-            app:destination="@id/more" />
-    </fragment>
+        tools:layout="@layout/fragment_login" />
 </navigation>

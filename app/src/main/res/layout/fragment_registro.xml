@@ -8,115 +8,130 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-
-        <EditText
-            android:id="@+id/txtNombre"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Nombre"
-            android:inputType="textPersonName"
-            android:text="Daniel" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
 
-        <EditText
-            android:id="@+id/txtApellidos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Apellido"
-            android:inputType="textPersonName"
-            android:text="Alas" />
+            <EditText
+                android:id="@+id/txtNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Nombre"
+                android:inputType="textPersonName"
+                android:text="Daniel" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
 
-        <EditText
-            android:id="@+id/txtCarnet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:hint="Carnet"
-            android:inputType="textPersonName"
-            android:text="25-0457-2018" />
+            <EditText
+                android:id="@+id/txtApellidos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Apellido"
+                android:inputType="textPersonName"
+                android:text="Alas" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="13dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
 
-        <EditText
-            android:id="@+id/txtMail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Mail"
-            android:inputType="textPersonName"
-            android:text="dannye.alas@gmail.com" />
+            <EditText
+                android:id="@+id/txtCarnet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Carnet"
+                android:inputType="textPersonName"
+                android:text="25-0457-2018" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="11dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="13dp" />
 
-        <EditText
-            android:id="@+id/txtTelefono"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Telefono"
-            android:inputType="textPersonName"
-            android:text="70430648" />
+            <EditText
+                android:id="@+id/txtMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Mail"
+                android:inputType="textPersonName"
+                android:text="dannye.alas@gmail.com" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="13dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="11dp" />
 
-        <EditText
-            android:id="@+id/txtPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:text="1234"
-            tools:text="1234" />
+            <EditText
+                android:id="@+id/txtTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Telefono"
+                android:inputType="textPersonName"
+                android:text="70430648" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="80dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="13dp" />
 
-        <Button
-            android:id="@+id/Rbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:text="Registrarse" />
+            <EditText
+                android:id="@+id/txtPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:text="1234"
+                tools:text="1234" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="23dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
 
-        <TextView
-            android:id="@+id/txtbtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ya estas registrado? Ingresa." />
-    </LinearLayout>
+            <Spinner
+                android:id="@+id/spinnerCarreras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="49dp" />
+
+            <Button
+                android:id="@+id/Rbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:text="Registrarse" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="23dp" />
+
+            <TextView
+                android:id="@+id/txtbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ya estas registrado? Ingresa." />
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </FrameLayout>

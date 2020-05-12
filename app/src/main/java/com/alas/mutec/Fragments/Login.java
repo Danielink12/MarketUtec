@@ -22,6 +22,7 @@ import com.alas.mutec.Api.LoginModel;
 import com.alas.mutec.Api.RegistroModel;
 import com.alas.mutec.Api.User;
 import com.alas.mutec.R;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.stream.JsonToken;
 
 import okhttp3.OkHttpClient;
@@ -40,7 +41,7 @@ public class Login extends Fragment {
     View vista;
 
     ApiInterface apiInterface;
-    EditText txtUser, txtPass;
+    TextInputEditText txtUser, txtPass;
     Button btn;
     TextView txtbtn;
 
