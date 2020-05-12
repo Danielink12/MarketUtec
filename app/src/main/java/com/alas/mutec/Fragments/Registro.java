@@ -129,8 +129,6 @@ public class Registro extends Fragment {
 
                 // Commit a la transacción
                 transaction.commit();
-
-                Carreras();
             }
         });
 
@@ -150,7 +148,15 @@ public class Registro extends Fragment {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(getContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Registro Exitoso!", Toast.LENGTH_SHORT).show();
+
+                    Login nuevoFragmento = new Login();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
+                    transaction.addToBackStack(null);
+
+                    // Commit a la transacción
+                    transaction.commit();
                 }else{
                     Toast.makeText(getContext(), response.toString(), Toast.LENGTH_SHORT).show();
                 }
