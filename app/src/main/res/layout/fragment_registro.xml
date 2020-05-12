@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_white_1000"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/registrobg"
     tools:context=".Fragments.Registro">
 
     <!-- TODO: Update blank fragment layout -->
@@ -21,84 +22,142 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="47dp" />
 
-            <EditText
-                android:id="@+id/txtNombre"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Nombre"
-                android:inputType="textPersonName"
-                android:text="Daniel" />
+                android:layout_gravity="center"
+                android:textSize="28dp"
+                android:text="Registro" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold|italic"
+                android:text="________________________________" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="28dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Nombre"
+                    android:inputType="textPersonName"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Daniel"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="16dp" />
 
-            <EditText
-                android:id="@+id/txtApellidos"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Apellido"
-                android:inputType="textPersonName"
-                android:text="Alas" />
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtApellidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Apellido"
+                    android:inputType="textPersonName"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Alas" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="12dp" />
 
-            <EditText
-                android:id="@+id/txtCarnet"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
-                android:hint="Carnet"
-                android:inputType="textPersonName"
-                android:text="25-0457-2018" />
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtCarnet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:hint="Carnet"
+                    android:inputType="phone"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:text="25-0457-2018" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="13dp" />
 
-            <EditText
-                android:id="@+id/txtMail"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Mail"
-                android:inputType="textPersonName"
-                android:text="dannye.alas@gmail.com" />
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtMail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Mail"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:text="dannye.alas@gmail.com" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="11dp" />
 
-            <EditText
-                android:id="@+id/txtTelefono"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Telefono"
-                android:inputType="textPersonName"
-                android:text="70430648" />
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Telefono"
+                    android:inputType="phone"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:text="70430648" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="13dp" />
 
-            <EditText
-                android:id="@+id/txtPass"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:text="1234"
-                tools:text="1234" />
+                app:passwordToggleEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:text="1234"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    tools:text="1234"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -107,17 +166,20 @@
             <Spinner
                 android:id="@+id/spinnerCarreras"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"/>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="49dp" />
+                android:layout_height="32dp" />
 
             <Button
                 android:id="@+id/Rbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:text="Registrarse" />
 
             <Space
@@ -129,6 +191,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ya estas registrado? Ingresa." />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="68dp" />
 
         </LinearLayout>
     </ScrollView>

@@ -142,7 +142,7 @@ public class Registro extends Fragment {
     public void registro(){
         int idusuario=0,idtipousuario=0;
         String Carnet = txtCarnet.getText().toString(),Nombre=txtNombre.getText().toString(),Apellido=txtApellidos.getText().toString(),Correo=txtMail.getText().toString(),Telefono=txtTelefono.getText().toString();
-        int idcarrera=1,estado=1,betado=0,clave;
+        int idcarrera=spinnerCarreras.getSelectedItemPosition()+1,estado=1,betado=0,clave;
         String Sclave=txtPass.getText().toString();
         clave = Integer.parseInt(Sclave);
         Call<String> rg = apiInterface.registro(new RegistroModel(idusuario,idtipousuario,Carnet,Nombre,Apellido,Correo,Telefono,idcarrera,estado,betado,clave));

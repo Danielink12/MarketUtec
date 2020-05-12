@@ -3,7 +3,7 @@ package com.alas.mutec.Api;
 public class RegistroModel {
 
    public int idusuario,idtipousuario;
-   public String Carnet,Nombre,Apellido,Correo,Telefono;
+   public String Carnet,Nombre,Apellido,Correo,Telefono_;
    public int idcarrera,Estado,Betado,Clave;
 
     public RegistroModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono, int idcarrera, int estado, int betado, int clave) {
@@ -13,7 +13,7 @@ public class RegistroModel {
         Nombre = nombre;
         Apellido = apellido;
         Correo = correo;
-        Telefono = telefono;
+        Telefono_ = telefono;
         this.idcarrera = idcarrera;
         this.Estado = estado;
         this.Betado = betado;
@@ -69,11 +69,11 @@ public class RegistroModel {
     }
 
     public String getTelefono() {
-        return Telefono;
+        return Telefono_;
     }
 
     public void setTelefono(String telefono) {
-        Telefono = telefono;
+        Telefono_ = telefono;
     }
 
     public int getIdcarrera() {
