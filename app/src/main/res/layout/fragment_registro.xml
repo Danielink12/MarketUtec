@@ -11,7 +11,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="always" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,16 +30,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="28dp"
-                android:text="Registro" />
+                android:text="Registro"
+                android:textSize="28dp" />
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textStyle="bold|italic"
-                android:text="________________________________" />
+                android:text="________________________________"
+                android:textStyle="bold|italic" />
 
             <Space
                 android:layout_width="match_parent"
@@ -47,16 +48,17 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtNombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="Nombre"
                     android:inputType="textPersonName"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:text="Daniel"/>
+                    android:text="Daniel" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -66,15 +68,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtApellidos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="Apellido"
                     android:inputType="textPersonName"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
                     android:text="Alas" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,16 +88,17 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtCarnet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="Carnet"
-                    android:inputType="numberSigned"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginLeft="25dp"
+                    android:inputType="textPersonName"
                     android:text="25-0457-2018" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,15 +109,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtMail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="Mail"
                     android:inputType="textEmailAddress"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
                     android:text="dannye.alas@gmail.com" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,15 +130,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtTelefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="Telefono"
-                    android:inputType="phone"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginLeft="25dp"
+                    android:inputType="textPersonName"
                     android:text="70430648" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,18 +151,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtPass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:text="1234"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    tools:text="1234"/>
+                    tools:text="1234" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -168,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"/>
+                android:layout_marginRight="25dp" />
 
             <Space
                 android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,12 +23,16 @@ import com.alas.mutec.Api.ApiClient;
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CarrerasModel;
 import com.alas.mutec.Api.RegistroModel;
+import com.alas.mutec.MainActivity;
 import com.alas.mutec.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,12 +47,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Registro extends Fragment {
 
+    public static final Pattern NOMBRE = Pattern.compile("^[A-Za-z áéíóúñÑÁÉÍÓÚ]{0,50}$");
+    public static final Pattern APELLIDO = Pattern.compile("^[A-Za-z áéíóúñÑÁÉÍÓÚ]{0,50}$");
+    public static final Pattern CARNET = Pattern.compile("\\d{2}-\\d{4}-\\d{4}$");
+    public static final Pattern MAIL = Pattern.compile("^([0-9]{10})+\\@mail.utec.edu.sv|([A-za-z . 0-9])+\\@mail.utec.edu.sv|([A-za-z . 0-9])+\\@gmail.com|([A-za-z . 0-9])+\\@outlook.com|([A-za-z . 0-9])+\\@hotmail.com|([A-za-z . 0-9])+\\@yahoo.com");
+    public static final Pattern TELEFONO = Pattern.compile("^[6789]\\d{3}-\\d{4}$");
+    public static final Pattern PASSWORD = Pattern.compile("");
+
     ApiInterface apiInterface;
     View vista;
-    EditText txtNombre,txtApellidos,txtCarnet,txtMail,txtTelefono,txtPass;
+    TextInputEditText txtNombre,txtApellidos,txtCarnet,txtMail,txtTelefono,txtPass;
     Button Rbtn;
     TextView txtbtn, txtResponse;
     Spinner spinnerCarreras;
+    BottomNavigationView btnv;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,6 +103,8 @@ public class Registro extends Fragment {
             Log.d("EL pedo",ex.toString());
         }
 
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -112,9 +127,12 @@ public class Registro extends Fragment {
         txtbtn = vista.findViewById(R.id.txtbtn);
         spinnerCarreras = vista.findViewById(R.id.spinnerCarreras);
 
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
         Rbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!ValidarNombre()|!ValidarApellido()|!ValidarCarnet()|!ValidarCorreo()|!ValidarTelefono()){return;}
                 registro();
             }
         });
@@ -132,7 +150,6 @@ public class Registro extends Fragment {
             }
         });
 
-
         return vista;
 
     }
@@ -148,15 +165,18 @@ public class Registro extends Fragment {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(getContext(), "Registro Exitoso!", Toast.LENGTH_SHORT).show();
+                    if(response.body().equals("\"Este Usuario ya existe.\"")){
+                        Toast.makeText(getContext(), "Este Usuario ya existe!", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getContext(), "Registro exitoso!", Toast.LENGTH_SHORT).show();
+                        Login nuevoFragmento = new Login();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
+                        transaction.addToBackStack(null);
 
-                    Login nuevoFragmento = new Login();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
-                    transaction.addToBackStack(null);
-
-                    // Commit a la transacción
-                    transaction.commit();
+                        // Commit a la transacción
+                        transaction.commit();
+                    }
                 }else{
                     Toast.makeText(getContext(), response.toString(), Toast.LENGTH_SHORT).show();
                 }
@@ -207,5 +227,101 @@ public class Registro extends Fragment {
 
            }
        });
+    }
+
+    public Boolean ValidarNombre(){
+        String nombre = txtNombre.getText().toString().trim();
+
+        if(nombre.isEmpty()){
+            txtNombre.setError("Por favor ingrese su nombre ");
+            return false;
+        } else if(!NOMBRE.matcher(nombre).matches()){
+            txtNombre.setError("Expresiones permitidas [A-Z] [a-z] y letras con acentos");
+            return false;
+        }else{
+            txtNombre.setError(null);
+            return true;
+        }
+
+    }
+
+    public Boolean ValidarApellido(){
+        String apellido= txtApellidos.getText().toString().trim();
+
+        if(apellido.isEmpty()){
+            txtApellidos.setError("Por favor ingrese su apellido ");
+            return false;
+        } else if(!APELLIDO.matcher(apellido).matches()){
+            txtApellidos.setError("Expresiones permitidas [A-Z] [a-z] y letras con acentos");
+            return false;
+        }else{
+            txtApellidos.setError(null);
+            return true;
+        }
+
+    }
+
+    public Boolean ValidarCarnet(){
+        String carnet= txtCarnet.getText().toString().trim();
+
+        if(carnet.isEmpty()){
+            txtCarnet.setError("Por favor ingrese su apellido ");
+            return false;
+        } else if(!CARNET.matcher(carnet).matches()){
+            txtCarnet.setError("Ejem. 25-0457-2018");
+            return false;
+        }else{
+            txtCarnet.setError(null);
+            return true;
+        }
+
+    }
+
+    public Boolean ValidarCorreo(){
+        String mail= txtMail.getText().toString().trim();
+
+        if(mail.isEmpty()){
+            txtMail.setError("Por favor ingrese su apellido ");
+            return false;
+        } else if(!MAIL.matcher(mail).matches()){
+            txtMail.setError("Se acepta correo institucional, gmail, hotmail, yahoo");
+            return false;
+        }else{
+            txtMail.setError(null);
+            return true;
+        }
+
+    }
+
+    public Boolean ValidarTelefono(){
+        String telefono = txtTelefono.getText().toString().trim();
+
+        if(telefono.isEmpty()){
+            txtTelefono.setError("Por favor ingrese su numero celular");
+            return false;
+        } else if(!TELEFONO.matcher(telefono).matches()){
+            txtTelefono.setError("Ejem. 6788-1000");
+            return false;
+        }else{
+            txtTelefono.setError(null);
+            return true;
+        }
+
+    }
+
+    public Boolean ValidarPassword(){
+        String pass = txtPass.getText().toString().trim();
+
+        if(pass.isEmpty()){
+            txtPass.setError("Por favor ingrese su numero celular");
+            return false;
+        } else if(!PASSWORD.matcher(pass).matches()){
+            txtPass.setError("Ejem. 6788-1000");
+            return false;
+        }else{
+            txtPass.setError(null);
+            return true;
+        }
+
     }
 }

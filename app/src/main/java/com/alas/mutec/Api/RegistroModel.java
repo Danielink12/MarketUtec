@@ -1,5 +1,7 @@
 package com.alas.mutec.Api;
 
+import java.util.regex.Pattern;
+
 public class RegistroModel {
 
    public int idusuario,idtipousuario;

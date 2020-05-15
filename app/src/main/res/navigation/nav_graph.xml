@@ -3,17 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/login">
+    app:startDestination="@id/home">
 
     <fragment
         android:id="@+id/home"
         android:name="com.alas.mutec.Fragments.Home"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_home_to_login"
-            app:destination="@id/login" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/more"
         android:name="com.alas.mutec.Fragments.More"
@@ -24,4 +20,9 @@
         android:name="com.alas.mutec.Fragments.Login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registro"
+        android:name="com.alas.mutec.Fragments.Registro"
+        android:label="fragment_registro"
+        tools:layout="@layout/fragment_registro" />
 </navigation>

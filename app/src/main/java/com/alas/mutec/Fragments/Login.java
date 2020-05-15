@@ -25,6 +25,8 @@ import com.alas.mutec.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.stream.JsonToken;
 
+import java.util.regex.Pattern;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +39,10 @@ import retrofit2.http.GET;
  * create an instance of this fragment.
  */
 public class Login extends Fragment {
+
+    public static final Pattern CARNET = Pattern.compile("\\d{2}-\\d{4}-\\d{4}$");
+    public static final Pattern PASSWORD = Pattern.compile("");
+
 
     View vista;
 
@@ -100,6 +106,7 @@ public class Login extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!ValidarCarnet()){return;}
                 log();
             }
         });
@@ -141,6 +148,38 @@ public class Login extends Fragment {
                 Log.d("RESP",t.toString());
             }
         });
+
+    }
+
+    public Boolean ValidarCarnet(){
+        String carnet= txtUser.getText().toString().trim();
+
+        if(carnet.isEmpty()){
+            txtUser.setError("Por favor ingrese su apellido ");
+            return false;
+        } else if(!CARNET.matcher(carnet).matches()){
+            txtUser.setError("Ejem. 25-0457-2018");
+            return false;
+        }else{
+            txtUser.setError(null);
+            return true;
+        }
+
+    }
+
+    public Boolean ValidarPassword(){
+        String pass = txtPass.getText().toString().trim();
+
+        if(pass.isEmpty()){
+            txtPass.setError("Por favor ingrese su numero celular");
+            return false;
+        } else if(!PASSWORD.matcher(pass).matches()){
+            txtPass.setError("Ejem. 6788-1000");
+            return false;
+        }else{
+            txtPass.setError(null);
+            return true;
+        }
 
     }
 
