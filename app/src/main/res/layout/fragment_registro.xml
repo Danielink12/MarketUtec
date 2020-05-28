@@ -57,8 +57,7 @@
                     android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="@string/nombre_registro"
-                    android:inputType="textPersonName"
-                    android:text="Daniel" />
+                    android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -77,8 +76,7 @@
                     android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="@string/apellido_registro"
-                    android:inputType="textPersonName"
-                    android:text="Alas" />
+                    android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -98,8 +96,7 @@
                     android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="@string/carnet_registro_hint"
-                    android:inputType="textPersonName"
-                    android:text="25-0457-2018" />
+                    android:inputType="textPersonName"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -118,8 +115,7 @@
                     android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="@string/mail_registro_hint"
-                    android:inputType="textEmailAddress"
-                    android:text="dannye.alas@gmail.com" />
+                    android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -139,8 +135,7 @@
                     android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="@string/telefono_registro_hint"
-                    android:inputType="textPersonName"
-                    android:text="70430648" />
+                    android:inputType="textPersonName"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -161,9 +156,7 @@
                     android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="@string/password_registro_hint"
-                    android:inputType="textPassword"
-                    android:text="1234"
-                    tools:text="1234" />
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -201,7 +194,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="68dp" />
+                android:layout_height="207dp" />
 
         </LinearLayout>
     </ScrollView>

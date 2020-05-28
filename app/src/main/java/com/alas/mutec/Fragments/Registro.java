@@ -100,7 +100,7 @@ public class Registro extends Fragment {
         }
         catch (Exception ex){
             Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
-            Log.d("EL pedo",ex.toString());
+            Log.d("Error Spinner carreras",ex.toString());
         }
 
 

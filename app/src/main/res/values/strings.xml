@@ -29,4 +29,55 @@
     <string name="password_registro_hint">Password</string>
     <string name="btn_registrarse">Registrarse</string>
     <string name="btn_registro_volver">Ya estas registrado? Ingresa.</string>
+    <string name="btnAgregar">Agregar</string>
+    <string name="image_default__image">Imagen por defecto</string>
+
+
+    <string name="item_entry_detail__item_name">Nombre del árticulo</string>
+    <string name="item_entry_detail__category_name">Categoría</string>
+    <string name="item_entry_detail__subcategory_name">Subcategoría</string>
+    <string name="item_entry_detail__discount_name">Tipo de descuento</string>
+    <string name="item_entry_detail__search_name">Buscar etiquetas / palabras clave</string>
+    <string name="item_entry_detail__description">Descripción</string>
+    <string name="item_entry_detail__is_published">Esta publicado</string>
+    <string name="item_entry_detail__item_images">Imágenes del artículo</string>
+    <string name="item_entry_detail__view_all">Ver todos></string>
+    <string name="item_entry_detail__btn_attributes">ATRIBUTOS</string>
+    <string name="item_entry_detail__btn_upload_image">CARGAR IMAGEN</string>
+    <string name="item_entry_detail__btn_save">SALVAR</string>
+    <string name="item_entry_detail__btn_filter">BUSCAR</string>
+    <string name="item_entry_detail__price">Precio</string>
+    <string name="item_entry_detail__title">¿Qué estás publicando hoy?</string>
+    <string name="item_entry_detail__desc">Elija algunas fotos para mostrar su articulo.</string>
+    <string name="item_entry_detail__remark">Observación</string>
+    <string name="item_entry_detail__shop_setting">Ajuste de la tienda</string>
+    <string name="item_entry_detail__is_shop">Vendera mas de 1 unidad?</string>
+    <string name="item_entry_detail__is_shop_desc">(Se le indicara al comprador si puede ordenar mas de 1 unidad)</string>
+    <string name="item_entry_detail__highlight">Información destacada</string>
+    <string name="item_entry_detail__latitude">Latitud</string>
+    <string name="item_entry_detail__longitude">Longitud</string>
+    <string name="item_entry_detail__location">Ubicación</string>
+    <string name="item_entry_detail__address">Dirección</string>
+    <string name="item_entry_detail__submit">Enviar</string>
+    <string name="item_entry_detail__brand">Marca (Opcional)</string>
+    <string name="item_entry_star">*</string>
+    <string name="sf__ByItemType">Título del anuncio</string>
+    <string name="menu__category">Categoría</string>
+    <string name="search__notSet">No establecido</string>
+    <string name="menu__subcategory">Subcategoría</string>
+    <string name="sf__type">Tipo</string>
+    <string name="sf__notSet">No establecido</string>
+    <string name="sf__item_conditio">Condición del artículo</string>
+    <string name="sf__price_type">Tipo de precio</string>
+    <string name="sf__deal_option">Opción de entrega</string>
+    <string name="item_entry_pin_shop">ubicación de tienda o lugar de reunion</string>
+    <string name="titulopub">Titulo</string>
+    <string name="precioart">Precio</string>
+    <string name="carreraart">Carrera</string>
+    <string name="descripcionarticulo">Descripcion</string>
+    <string name="btnpublicar_articulo">Publicar Articulo</string>
+    <string name="spinnersubcategoria">SubCategoria</string>
+    <string name="spinner_estado">Estado</string>
+
+
 </resources>

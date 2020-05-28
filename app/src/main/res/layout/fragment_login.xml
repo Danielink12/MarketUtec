@@ -95,11 +95,9 @@
                     android:hint="@string/login_carnet_hint"
                     android:inputType="textPersonName"
                     android:selectAllOnFocus="false"
-                    android:text="25-2857-2018"
                     android:textColor="@color/md_white_1000"
                     android:textColorHint="@color/md_white_1000"
-                    app:backgroundTint="@color/md_white_1000"
-                    tools:text="25-2857-2018" />
+                    app:backgroundTint="@color/md_white_1000" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -124,11 +122,9 @@
                     android:ems="10"
                     android:hint="@string/login_password"
                     android:inputType="textPassword"
-                    android:text="1234"
                     app:backgroundTint="@color/md_white_1000"
                     android:textColorHint="@color/md_white_1000"
-                    android:textColor="@color/md_white_1000"
-                    tools:text="1234" />
+                    android:textColor="@color/md_white_1000" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space

@@ -1,38 +1,34 @@
 package com.alas.mutec.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.Settings;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.alas.mutec.AddArt;
 import com.alas.mutec.Api.AdaptadorFirebase;
 import com.alas.mutec.Api.Articulo;
-import com.alas.mutec.MainActivity;
 import com.alas.mutec.R;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,7 +41,7 @@ public class Home extends Fragment {
     List<Articulo> lArticulo;
     AdaptadorFirebase af;
     private String mId;
-
+    Button btnadd;
 
     private LinearLayout searchRootLayout;
 
@@ -64,6 +60,7 @@ public class Home extends Fragment {
         searchRootLayout    = vista.findViewById(R.id.search_root_layout);
         scrollView          = vista.findViewById(R.id.scrollView);
         recyclerView = vista.findViewById(R.id.popularItemRecyclerView);
+        btnadd = vista.findViewById(R.id.addItemButton);
 
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -77,6 +74,7 @@ public class Home extends Fragment {
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1,
                 LinearLayoutManager.HORIZONTAL,false));
+
 
         database.getReference().getRoot().addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,6 +102,14 @@ public class Home extends Fragment {
         recyclerView.setAdapter(adaptadorFirebase);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2,
                 LinearLayoutManager.HORIZONTAL,false));*/
+
+        btnadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), AddArt.class);
+                startActivity(i);
+            }
+        });
 
 
 
