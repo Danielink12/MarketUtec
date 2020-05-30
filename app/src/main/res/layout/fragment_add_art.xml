@@ -4,7 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.AddArticulo">
+    tools:context=".Fragments.AddArticulo"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/md_grey_200">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -13,18 +17,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:background="@color/md_grey_200">
-
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="50dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="42dp" />
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <TextView
                 android:id="@+id/titleTextView"
@@ -60,12 +65,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descTitleTextView"
-                tools:layout_editor_absoluteX="56dp">
+                tools:layout_editor_absoluteX="56dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true">
 
                     <ImageView
                         android:id="@+id/firstImageView"
@@ -80,7 +91,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/default_image" />
+                        app:srcCompat="@drawable/default_image"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        />
 
                     <ImageView
                         android:id="@+id/secImageView"
@@ -95,7 +108,8 @@
                         app:layout_constraintStart_toEndOf="@id/firstImageView"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/default_image" />
+                        app:srcCompat="@drawable/default_image"
+                        android:background="?attr/selectableItemBackgroundBorderless"/>
 
                     <ImageView
                         android:id="@+id/thirdImageView"
@@ -110,7 +124,8 @@
                         app:layout_constraintStart_toEndOf="@+id/secImageView"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/default_image" />
+                        app:srcCompat="@drawable/default_image"
+                        android:background="?attr/selectableItemBackgroundBorderless"/>
 
                     <ImageView
                         android:id="@+id/fouthImageView"
@@ -125,7 +140,8 @@
                         app:layout_constraintStart_toEndOf="@+id/thirdImageView"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/default_image" />
+                        app:srcCompat="@drawable/default_image"
+                        android:background="?attr/selectableItemBackgroundBorderless"/>
 
                     <ImageView
                         android:id="@+id/fifthImageView"
@@ -140,7 +156,8 @@
                         app:layout_constraintStart_toEndOf="@+id/fouthImageView"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/default_image" />
+                        app:srcCompat="@drawable/default_image"
+                        android:background="?attr/selectableItemBackgroundBorderless"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -335,4 +352,8 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="42dp" />
 </FrameLayout>

@@ -1,14 +1,20 @@
 package com.alas.mutec.Fragments;
 
+import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,6 +30,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddArticulo#newInstance} factory method to
@@ -33,6 +41,18 @@ public class AddArticulo extends Fragment {
 
     View vista;
     Spinner spinnerCarreras;
+    ImageView uno,dos,tres,cuatro,cinco;
+    Button btnpub;
+
+    private static final int uno_imagen = 100;
+    private static final int dos_imagen = 200;
+    private static final int tres_imagen = 300;
+    private static final int cuatro_imagen = 400;
+    private static final int cinco_imagen = 500;
+
+    Uri imageUri;
+    ImageView foto_gallery;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,8 +108,96 @@ public class AddArticulo extends Fragment {
         // Inflate the layout for this fragment
         vista = inflater.inflate(R.layout.fragment_add_art, container, false);
         spinnerCarreras = vista.findViewById(R.id.carreraspinner);
+        btnpub = vista.findViewById(R.id.btnPublicar);
+        uno = vista.findViewById(R.id.firstImageView);
+        dos = vista.findViewById(R.id.secImageView);
+        tres = vista.findViewById(R.id.thirdImageView);
+        cuatro = vista.findViewById(R.id.fouthImageView);
+        cinco = vista.findViewById(R.id.fifthImageView);
+
+        uno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                galeriauno();
+
+            }
+        });
+
+        dos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                galeriados();
+
+            }
+        });
+
+        tres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                galeriatres();
+
+            }
+        });
+
+        cuatro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                galeriacuatro();
+
+            }
+        });
+
+        cinco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                galeriacinco();
+
+            }
+        });
+
 
         return vista;
+    }
+
+    private void galeriauno(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, uno_imagen);
+    }
+    private void galeriados(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, dos_imagen);
+    }
+    private void galeriatres(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, tres_imagen);
+    }
+    private void galeriacuatro(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, cuatro_imagen);
+    }
+    private void galeriacinco(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, cinco_imagen);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == RESULT_OK && requestCode == uno_imagen){
+            imageUri = data.getData();
+            uno.setImageURI(imageUri);
+        }else if (resultCode == RESULT_OK && requestCode == dos_imagen){
+            imageUri = data.getData();
+            dos.setImageURI(imageUri);
+        }else if (resultCode == RESULT_OK && requestCode == tres_imagen){
+            imageUri = data.getData();
+            tres.setImageURI(imageUri);
+        }else if (resultCode == RESULT_OK && requestCode == cuatro_imagen){
+            imageUri = data.getData();
+            cuatro.setImageURI(imageUri);
+        }else if (resultCode == RESULT_OK && requestCode == cinco_imagen){
+            imageUri = data.getData();
+            cinco.setImageURI(imageUri);
+        }
     }
 
     public void Carreras() {
