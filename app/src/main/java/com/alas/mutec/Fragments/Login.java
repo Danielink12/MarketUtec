@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.alas.mutec.Api.ApiClient;
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.LoginModel;
+import com.alas.mutec.Api.PreferenceHelper;
 import com.alas.mutec.Api.RegistroModel;
 import com.alas.mutec.Api.User;
 import com.alas.mutec.MainActivity;
@@ -51,6 +52,11 @@ public class Login extends Fragment {
     TextInputEditText txtUser, txtPass;
     Button btn;
     TextView txtbtn;
+
+    private PreferenceHelper preferenceHelper;
+
+    String token ="";
+    String[] id= token.split("id:");
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -86,7 +92,24 @@ public class Login extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        preferenceHelper = new PreferenceHelper(getContext());
         super.onCreate(savedInstanceState);
+
+        if(preferenceHelper.getIsLog()){
+          /*  Intent intent = new Intent(MainActivity.this,WelcomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            getActivity().finish(); */
+
+            Registro nuevoFragmento = new Registro();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
+            transaction.addToBackStack(null);
+
+            // Commit a la transacción
+            transaction.commit();
+        }
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -137,9 +160,11 @@ public class Login extends Fragment {
             public void onResponse(Call<String> call, @NonNull Response<String> response) {
 
                 if(response.isSuccessful()){
+                    token =response.body();
+                    String ids = id[1];
                     Toast.makeText(getContext(), response.body(), Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getContext(), "else", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Usuario o Password incorrecto.", Toast.LENGTH_SHORT).show();
                 }
             }
 

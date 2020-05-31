@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CarrerasModel;
+import com.alas.mutec.Api.SCatModel;
 import com.alas.mutec.R;
 
 import java.util.List;
@@ -40,7 +41,7 @@ import static android.app.Activity.RESULT_OK;
 public class AddArticulo extends Fragment {
 
     View vista;
-    Spinner spinnerCarreras;
+    Spinner spinnerCarreras,subcspinner,estspinner;
     ImageView uno,dos,tres,cuatro,cinco;
     Button btnpub;
 
@@ -91,6 +92,7 @@ public class AddArticulo extends Fragment {
 
         try {
             Carreras();
+            SCat();
         }
         catch (Exception ex){
             Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
@@ -108,6 +110,8 @@ public class AddArticulo extends Fragment {
         // Inflate the layout for this fragment
         vista = inflater.inflate(R.layout.fragment_add_art, container, false);
         spinnerCarreras = vista.findViewById(R.id.carreraspinner);
+        subcspinner = vista.findViewById(R.id.SubCSpinner);
+        estspinner = vista.findViewById(R.id.spinnerEstado);
         btnpub = vista.findViewById(R.id.btnPublicar);
         uno = vista.findViewById(R.id.firstImageView);
         dos = vista.findViewById(R.id.secImageView);
@@ -238,4 +242,45 @@ public class AddArticulo extends Fragment {
             }
         });
     }
+
+    public void SCat() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://13.66.170.249:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<SCatModel>> crs = jsonPlaceHolderApi.scat();
+        crs.enqueue(new Callback<List<SCatModel>>() {
+            @Override
+            public void onResponse(Call<List<SCatModel>> call, Response<List<SCatModel>> response) {
+
+                List<SCatModel> getscat = response.body();
+
+                String[] items = new String[getscat.size()];
+                for(int i=0; i<getscat.size(); i++){
+                    items[i] = getscat.get(i).getSubcategoria();
+                }
+                ArrayAdapter<String> adapter;
+                adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
+                subcspinner.setAdapter(adapter);
+
+              /* for (CarrerasModel post : posts) {
+                   String content = "";
+                   content += "idcarrera: " + post.getIdcarrera() + "\n";
+                   content += "Nombre: " + post.getNombre() + "\n";
+                   content += "Descripcion: " + post.getDescripcion() + "\n";
+
+                   txtResponse.append(content);
+
+               } */
+
+            }
+
+            @Override
+            public void onFailure(Call<List<SCatModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 }
