@@ -265,7 +265,7 @@ public class Registro extends Fragment {
         String carnet= txtCarnet.getText().toString().trim();
 
         if(carnet.isEmpty()){
-            txtCarnet.setError("Por favor ingrese su apellido ");
+            txtCarnet.setError("Por favor ingrese su Carnet ");
             return false;
         } else if(!CARNET.matcher(carnet).matches()){
             txtCarnet.setError("Ejem. 25-0457-2018");
@@ -281,7 +281,7 @@ public class Registro extends Fragment {
         String mail= txtMail.getText().toString().trim();
 
         if(mail.isEmpty()){
-            txtMail.setError("Por favor ingrese su apellido ");
+            txtMail.setError("Por favor ingrese su Correo ");
             return false;
         } else if(!MAIL.matcher(mail).matches()){
             txtMail.setError("Se acepta correo institucional, gmail, hotmail, yahoo");
