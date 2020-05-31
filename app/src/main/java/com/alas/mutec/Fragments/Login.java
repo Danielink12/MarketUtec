@@ -158,11 +158,12 @@ public class Login extends Fragment {
         lg.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, @NonNull Response<String> response) {
+                token =response.body();
 
                 if(response.isSuccessful()){
                     token =response.body();
-                    String ids = id[1];
-                    Toast.makeText(getContext(), response.body(), Toast.LENGTH_SHORT).show();
+                    String[] id= token.split("id:");
+                    Toast.makeText(getContext(), id[1].replace("\"",""), Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getContext(), "Usuario o Password incorrecto.", Toast.LENGTH_SHORT).show();
                 }
