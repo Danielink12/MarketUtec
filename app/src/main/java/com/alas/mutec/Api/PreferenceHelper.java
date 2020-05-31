@@ -20,6 +20,6 @@ public class PreferenceHelper {
         edit.commit();
     }
     public Boolean getIsLog(){
-        return app_prefs.getBoolean(Adentro,false);
+        return app_prefs.getBoolean(Adentro,true);
     }
 }

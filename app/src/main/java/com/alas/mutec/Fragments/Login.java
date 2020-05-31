@@ -101,7 +101,7 @@ public class Login extends Fragment {
             startActivity(intent);
             getActivity().finish(); */
 
-            Registro nuevoFragmento = new Registro();
+            Perfil nuevoFragmento = new Perfil();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
             transaction.addToBackStack(null);
@@ -181,7 +181,7 @@ public class Login extends Fragment {
         String carnet= txtUser.getText().toString().trim();
 
         if(carnet.isEmpty()){
-            txtUser.setError("Por favor ingrese su apellido ");
+            txtUser.setError("Por favor ingrese su Carnet ");
             return false;
         } else if(!CARNET.matcher(carnet).matches()){
             txtUser.setError("Ejem. 25-0457-2018");
