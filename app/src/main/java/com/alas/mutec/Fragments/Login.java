@@ -130,7 +130,7 @@ public class Login extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!ValidarCarnet()){return;}
+                if(!ValidarCarnet()|!ValidarPassword()){return;}
                 log();
             }
         });
@@ -163,7 +163,21 @@ public class Login extends Fragment {
                 if(response.isSuccessful()){
                     token =response.body();
                     String[] id= token.split("id:");
-                    Toast.makeText(getContext(), id[1].replace("\"",""), Toast.LENGTH_SHORT).show();
+
+                    preferenceHelper.setToken(token);
+                    preferenceHelper.setID(id[1].replace("\"",""));
+
+                    preferenceHelper.logueado(true);
+
+                    Perfil nuevoFragmento = new Perfil();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
+                    transaction.addToBackStack(null);
+
+                    // Commit a la transacción
+                    transaction.commit();
+
+                   // Toast.makeText(getContext(), id[1].replace("\"",""), Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getContext(), "Usuario o Password incorrecto.", Toast.LENGTH_SHORT).show();
                 }
@@ -198,11 +212,11 @@ public class Login extends Fragment {
         String pass = txtPass.getText().toString().trim();
 
         if(pass.isEmpty()){
-            txtPass.setError("Por favor ingrese su numero celular");
+            txtPass.setError("Por favor ingrese su password");
             return false;
-        } else if(!PASSWORD.matcher(pass).matches()){
+        /*} else if(!PASSWORD.matcher(pass).matches()){
             txtPass.setError("Ejem. 6788-1000");
-            return false;
+            return false; */
         }else{
             txtPass.setError(null);
             return true;

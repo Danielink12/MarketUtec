@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,9 @@ import com.alas.mutec.Api.CarrerasModel;
 import com.alas.mutec.Api.SCatModel;
 import com.alas.mutec.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,6 +34,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import org.jibble.simpleftp.*;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -89,6 +95,9 @@ public class AddArticulo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
 
         try {
             Carreras();
@@ -156,6 +165,13 @@ public class AddArticulo extends Fragment {
             public void onClick(View view) {
                 galeriacinco();
 
+            }
+        });
+
+        btnpub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ftpc();
             }
         });
 
@@ -281,6 +297,39 @@ public class AddArticulo extends Fragment {
             }
         });
     }
+
+    public void ftpc(){
+
+        try {
+            SimpleFTP ftp = new SimpleFTP();
+
+            // Connect to an FTP server on port 21.
+            ftp.connect("13.66.170,249", 21, "angel", "abcd1234");
+
+            // Set binary mode.
+            ftp.bin();
+
+            // Change to a new working directory on the FTP server.
+            ftp.cwd("public_html/imgmu");
+
+            // Upload some files.
+            ftp.stor(new File(String.valueOf(imageUri)));
+            ftp.stor(new File("comicbot-latest.png"));
+
+            // You can also upload from an InputStream, e.g.
+           // ftp.stor(new FileInputStream(new File("test.png")), "test.png");
+           // ftp.stor(someSocket.getInputStream(), "blah.dat");
+
+            // Quit from the FTP server.
+            ftp.disconnect();
+        }
+        catch (IOException e) {
+            Log.d("erooorrrrftpppp",e.toString());
+        }
+        Log.d("imageeeeeeeeeee",imageUri.toString());
+
+    }
+
 
 
 }

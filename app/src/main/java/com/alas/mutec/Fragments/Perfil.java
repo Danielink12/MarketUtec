@@ -3,16 +3,33 @@ package com.alas.mutec.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.alas.mutec.Api.ApiInterface;
+import com.alas.mutec.Api.CarrerasModel;
+import com.alas.mutec.Api.IDModel;
+import com.alas.mutec.Api.LoginModel;
+import com.alas.mutec.Api.PerfilModel;
 import com.alas.mutec.Api.PreferenceHelper;
 import com.alas.mutec.R;
+import com.google.gson.JsonObject;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +41,8 @@ public class Perfil extends Fragment {
     private Button btnlogout;
     private PreferenceHelper preferenceHelper;
     View vista;
+    ApiInterface apiInterface;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +78,14 @@ public class Perfil extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         preferenceHelper = new PreferenceHelper(getContext());
+        try {
+            getP();
+        }
+        catch (Exception ex){
+            Toast.makeText(getContext(), ex.toString(), Toast.LENGTH_SHORT).show();
+            Log.d("aaaaaaaaaaaaaa",ex.toString());
+        }
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -94,5 +121,34 @@ public class Perfil extends Fragment {
             }
         });
         return vista;
+    }
+
+    public void getP(){
+        int id =10;
+        String tokrn = "bearer"+"\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjI1LTA0NTctMjAxOCIsIm5iZiI6MTU5MDk4MDI5OCwiZXhwIjoxNTkwOTk0Njk4LCJpYXQiOjE1OTA5ODAyOTgsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDkyMjAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ5MjIwIn0.BAHl1t6Kj2_mlqi6IWpCycKM4XBuKR6d2W8HXhqbfG8 id:10\"";
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://13.66.170.249:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<PerfilModel> gp = jsonPlaceHolderApi.getPerfil(id,tokrn);
+        gp.enqueue(new Callback<PerfilModel>() {
+            @Override
+            public void onResponse(Call<PerfilModel> call, Response<PerfilModel> response) {
+                if(response.isSuccessful()) {
+                    Log.d("oooooooooooooooooo", String.valueOf(response.code()));
+                }else{
+                    Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+                    Log.d("eeeeeeeeeeeeeee", String.valueOf(response.code()));
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PerfilModel> call, Throwable t) {
+
+            }
+        });
+
+
     }
 }
