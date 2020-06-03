@@ -20,7 +20,11 @@ import android.widget.Toast;
 
 import com.alas.mutec.AddArt;
 import com.alas.mutec.Api.AdaptadorFirebase;
+import com.alas.mutec.Api.AdaptadorRetrofitArticulos;
+import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.Articulo;
+import com.alas.mutec.Api.CPubModel;
+import com.alas.mutec.Api.CarrerasModel;
 import com.alas.mutec.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +33,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +52,11 @@ public class Home extends Fragment {
     AdaptadorFirebase af;
     private String mId;
     Button btnadd;
+
+    //Region de articulos retrofit
+    RecyclerView RR;
+    List<CPubModel> lra;
+    AdaptadorRetrofitArticulos ara;
 
     private LinearLayout searchRootLayout;
 
@@ -74,6 +89,13 @@ public class Home extends Fragment {
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1,
                 LinearLayoutManager.HORIZONTAL,false));
+
+        //Region recycler view retrofit
+        lra = new ArrayList<>();
+        ara = new AdaptadorRetrofitArticulos(lra);
+        RR.setAdapter(ara);
+
+        RR.setLayoutManager(new GridLayoutManager(getContext(),1,LinearLayoutManager.HORIZONTAL,false));
 
 
         database.getReference().getRoot().addValueEventListener(new ValueEventListener() {
@@ -135,6 +157,42 @@ public class Home extends Fragment {
         isSearchBarHide = hide;
         int moveY = hide ? -(2 * searchRootLayout.getHeight()) : 0;
         searchRootLayout.animate().translationY(moveY).setStartDelay(100).setDuration(300).start();
+    }
+
+    public void Pubs(){
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://13.66.170.249:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<CPubModel>> gpub = jsonPlaceHolderApi.getpub();
+        gpub.enqueue(new Callback<List<CPubModel>>() {
+            @Override
+            public void onResponse(Call<List<CPubModel>> call, Response<List<CPubModel>> response) {
+                List<CPubModel> pubs = response.body();
+                ara.addAllItems(pubs);
+
+               /* List<CPubModel> pubs = response.body();
+
+                String[] items = new String[pubs.size()];
+
+                for(int i=0; i<pubs.size(); i++){
+                    items[i] = pubs.get(i).getNombre();
+                }
+
+
+                /*lArticulo.removeAll(lArticulo);
+                for(Response response1 : response.getClass()){
+                    Articulo articulo = snapshot.getValue(Articulo.class);
+                    lArticulo.add(articulo);
+                }
+                af.notifyDataSetChanged();*/
+            }
+
+            @Override
+            public void onFailure(Call<List<CPubModel>> call, Throwable t) {
+
+            }
+        });
     }
 
 }

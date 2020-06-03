@@ -1,6 +1,5 @@
 package com.alas.mutec.Api;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,33 +14,31 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdaptadorFirebase extends RecyclerView.Adapter<AdaptadorFirebase.ArticuloHolder> {
-    List<Articulo> articulo;
-   Context context;
+public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorFirebase.ArticuloHolder> {
+    List<CPubModel> articulo;
 
-    public AdaptadorFirebase(List<Articulo> articulo) {
+    public AdaptadorRetrofitArticulos(List<CPubModel> articulo) {
         this.articulo = articulo;
     }
 
-   /*  public AdaptadorFirebase(Class<Articulo> modelClass, int modelLayout, Class<ArticuloHolder> viewHolderClass, DatabaseReference ref, Context c)
-    {
-        super(modelClass, modelLayout, viewHolderClass, ref);
-        context = c;
-    } */
-
     @NonNull
     @Override
-    public ArticuloHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdaptadorFirebase.ArticuloHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //return null;
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_articulo_adap,parent,false);
-        ArticuloHolder holder = new ArticuloHolder(v);
+        AdaptadorFirebase.ArticuloHolder holder = new AdaptadorFirebase.ArticuloHolder(v);
         return holder;
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ArticuloHolder viewHolder, int position) {
+    public  void addAllItems(List<CPubModel> items) {
+        articulo.addAll(items);
+        notifyDataSetChanged();
+    }
 
-        Articulo at = articulo.get(position);
+    @Override
+    public void onBindViewHolder(@NonNull AdaptadorFirebase.ArticuloHolder viewHolder, int position) {
+
+        CPubModel at = articulo.get(position);
 
         viewHolder.estadoArticulo.setText(at.getEstadoArticulo());
         viewHolder.lugar.setText(at.getLugar());
@@ -60,10 +57,10 @@ public class AdaptadorFirebase extends RecyclerView.Adapter<AdaptadorFirebase.Ar
 
     @Override
     public int getItemCount() {
-        return articulo.size();
+        return 0;
     }
 
-    public static class ArticuloHolder extends RecyclerView.ViewHolder {
+    public class ArticuloHolder extends RecyclerView.ViewHolder {
         ImageView imagenPerfil, imagenArticulo;
         TextView nombrePerfil, tiempo, nombreArticulo;
         TextView precio;
