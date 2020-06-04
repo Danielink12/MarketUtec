@@ -6,9 +6,10 @@ public class RegistroModel {
 
    public int idusuario,idtipousuario;
    public String Carnet,Nombre,Apellido,Correo,Telefono_;
-   public int idcarrera,Estado,Betado,Clave;
+   public int idcarrera,Estado,Betado;
+   public String Clave;
 
-    public RegistroModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono, int idcarrera, int estado, int betado, int clave) {
+    public RegistroModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono, int idcarrera, int estado, int betado, String clave) {
         this.idusuario = idusuario;
         this.idtipousuario = idtipousuario;
         Carnet = carnet;
@@ -102,11 +103,11 @@ public class RegistroModel {
         this.Betado = betado;
     }
 
-    public int getClave() {
+    public String getClave() {
         return Clave;
     }
 
-    public void setClave(int clave) {
+    public void setClave(String clave) {
         this.Clave = clave;
     }
 

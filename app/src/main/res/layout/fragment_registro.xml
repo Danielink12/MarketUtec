@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/registrobg"
-    tools:context=".Fragments.Registro">
+    tools:context=".Fragments.Registro"
+    >
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -96,7 +97,7 @@
                     android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="@string/carnet_registro_hint"
-                    android:inputType="textPersonName"/>
+                    android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -135,7 +136,7 @@
                     android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="@string/telefono_registro_hint"
-                    android:inputType="textPersonName"/>
+                    android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space

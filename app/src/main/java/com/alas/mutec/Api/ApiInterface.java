@@ -38,10 +38,9 @@ public interface ApiInterface {
     Call<List<CPubModel>> getpub();
 
     @GET("Android/API/UsersAction/Perfil/{idusuario}")  //pendiente
-    Call<PerfilModel> getPerfil(@Path("idusuario") int idusuario, @Header("Authorization") String authHeader);
+    Call<PerfilModel> getPerfil(@Path("idusuario") String idusuario, @Header("Authorization") String authHeader);
 
   //  @Headers({"Authorization", "Bearer "+ token})
     //D/OkHttp: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjI1LTA0NTctMjAxOCIsIm5iZiI6MTU5MTA4MTk0NiwiZXhwIjoxNTkxMDk2MzQ2LCJpYXQiOjE1OTEwODE5NDYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDkyMjAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ5MjIwIn0.b2yzUrL5bqVjH1dCc6pUtH-ragsUmiq-s3N0mod130Y id:10"
-//[07/05 10:10 p.m.] AREVALO PALACIOS ANGEL DE JESUS
 //    Authorization","value":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjI1LTI4NTctMjAxOCIsIm5iZiI6MTU4ODkxMDcxNiwiZXhwIjoxNTg4OTI1MTE2LCJpYXQiOjE1ODg5MTA3MTYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDkyMjAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ5MjIwIn0.7mR3YADaQv0nsdW-OJA4KrMDu-z8XdTpNJ5Q7FBepDE"
 }

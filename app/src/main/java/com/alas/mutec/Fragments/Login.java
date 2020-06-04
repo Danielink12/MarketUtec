@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,6 +150,32 @@ public class Login extends Fragment {
             }
         });
 
+        txtUser.addTextChangedListener(new TextWatcher() {
+            int prevL = 0;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                prevL = txtUser.getText().toString().length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                if ((prevL < length) && (length == 2 | length == 7)) {
+                    String data = txtUser.getText().toString();
+                    txtUser.setText(data + "-");
+                    txtUser.setSelection(length + 1);
+
+
+                }
+
+            }
+        });
+
         return vista;
     }
 
@@ -164,7 +192,7 @@ public class Login extends Fragment {
                     token =response.body();
                     String[] id= token.split("id:");
 
-                    preferenceHelper.setToken(token);
+                    preferenceHelper.setToken(id[0].replace("\"",""));
                     preferenceHelper.setID(id[1].replace("\"",""));
 
                     preferenceHelper.logueado(true);

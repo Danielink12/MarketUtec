@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,7 +134,7 @@ public class Registro extends Fragment {
         Rbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!ValidarNombre()|!ValidarApellido()|!ValidarCarnet()|!ValidarCorreo()|!ValidarTelefono()){return;}
+                if(!ValidarNombre()|!ValidarApellido()|!ValidarCarnet()|!ValidarCorreo()|!ValidarTelefono()|!ValidarPassword()){return;}
                 registro();
             }
         });
@@ -150,6 +152,59 @@ public class Registro extends Fragment {
             }
         });
 
+        txtTelefono.addTextChangedListener(new TextWatcher() {
+            int prevL = 0;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                prevL = txtTelefono.getText().toString().length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                if ((prevL < length) && (length == 4)) {
+                    String data = txtTelefono.getText().toString();
+                    txtTelefono.setText(data + "-");
+                    txtTelefono.setSelection(length + 1);
+
+
+                }
+
+            }
+        });
+
+        txtCarnet.addTextChangedListener(new TextWatcher() {
+            int prevL = 0;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                prevL = txtCarnet.getText().toString().length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                if ((prevL < length) && (length == 2 | length == 7)) {
+                    String data = txtCarnet.getText().toString();
+                    txtCarnet.setText(data + "-");
+                    txtCarnet.setSelection(length + 1);
+
+
+                }
+
+            }
+        });
+
+
         return vista;
 
     }
@@ -159,8 +214,8 @@ public class Registro extends Fragment {
         String Carnet = txtCarnet.getText().toString(),Nombre=txtNombre.getText().toString(),Apellido=txtApellidos.getText().toString(),Correo=txtMail.getText().toString(),Telefono=txtTelefono.getText().toString();
         int idcarrera=spinnerCarreras.getSelectedItemPosition()+1,estado=1,betado=0,clave;
         String Sclave=txtPass.getText().toString();
-        clave = Integer.parseInt(Sclave);
-        Call<String> rg = apiInterface.registro(new RegistroModel(idusuario,idtipousuario,Carnet,Nombre,Apellido,Correo,Telefono,idcarrera,estado,betado,clave));
+        //clave = Integer.parseInt(Sclave);
+        Call<String> rg = apiInterface.registro(new RegistroModel(idusuario,idtipousuario,Carnet,Nombre,Apellido,Correo,Telefono,idcarrera,estado,betado,Sclave));
         rg.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -313,10 +368,7 @@ public class Registro extends Fragment {
         String pass = txtPass.getText().toString().trim();
 
         if(pass.isEmpty()){
-            txtPass.setError("Por favor ingrese su numero celular");
-            return false;
-        } else if(!PASSWORD.matcher(pass).matches()){
-            txtPass.setError("Ejem. 6788-1000");
+            txtPass.setError("Por favor ingrese su numero password");
             return false;
         }else{
             txtPass.setError(null);

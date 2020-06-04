@@ -1,6 +1,7 @@
 package com.alas.mutec.Fragments;
 
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,12 +92,31 @@ public class Home extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1,
                 LinearLayoutManager.HORIZONTAL,false));
 
+        af.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String telefono = "77474067";
+                Toast.makeText(getContext(), lArticulo.get(recyclerView.getChildAdapterPosition(view)).getNombreArticulo(), Toast.LENGTH_SHORT).show();
+                Intent _intencion = new Intent("android.intent.action.MAIN");
+                _intencion.setComponent(new ComponentName("com.whatsapp","com.whatsapp.Conversation"));
+                _intencion.putExtra("jid", PhoneNumberUtils.stripSeparators("503" + telefono)+"@s.whatsapp.net");
+                startActivity(_intencion);
+            }
+        });
+
         //Region recycler view retrofit
-        lra = new ArrayList<>();
+      /*  lra = new ArrayList<>();
         ara = new AdaptadorRetrofitArticulos(lra);
         RR.setAdapter(ara);
 
         RR.setLayoutManager(new GridLayoutManager(getContext(),1,LinearLayoutManager.HORIZONTAL,false));
+
+        ara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        }); */
 
 
         database.getReference().getRoot().addValueEventListener(new ValueEventListener() {

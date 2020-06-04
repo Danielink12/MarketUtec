@@ -1,23 +1,27 @@
 package com.alas.mutec.Api;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alas.mutec.Fragments.Login;
 import com.alas.mutec.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdaptadorFirebase extends RecyclerView.Adapter<AdaptadorFirebase.ArticuloHolder> {
+public class AdaptadorFirebase extends RecyclerView.Adapter<AdaptadorFirebase.ArticuloHolder> implements View.OnClickListener {
     List<Articulo> articulo;
    Context context;
+   private View.OnClickListener listener;
 
     public AdaptadorFirebase(List<Articulo> articulo) {
         this.articulo = articulo;
@@ -34,6 +38,7 @@ public class AdaptadorFirebase extends RecyclerView.Adapter<AdaptadorFirebase.Ar
     public ArticuloHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //return null;
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_articulo_adap,parent,false);
+        v.setOnClickListener(listener);
         ArticuloHolder holder = new ArticuloHolder(v);
         return holder;
     }
@@ -63,12 +68,24 @@ public class AdaptadorFirebase extends RecyclerView.Adapter<AdaptadorFirebase.Ar
         return articulo.size();
     }
 
-    public static class ArticuloHolder extends RecyclerView.ViewHolder {
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(listener!=null){
+            listener.onClick(view);
+        }
+    }
+
+    public static class ArticuloHolder extends RecyclerView.ViewHolder{
         ImageView imagenPerfil, imagenArticulo;
         TextView nombrePerfil, tiempo, nombreArticulo;
         TextView precio;
         TextView lugar,vendecompra,estadoArticulo;
         TextView megusta;
+        Context context;
 
         public ArticuloHolder(@NonNull View articulo_adaptador) {
             super(articulo_adaptador);

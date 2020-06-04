@@ -14,8 +14,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorFirebase.ArticuloHolder> {
+public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorFirebase.ArticuloHolder> implements View.OnClickListener  {
     List<CPubModel> articulo;
+    private View.OnClickListener listener;
+
 
     public AdaptadorRetrofitArticulos(List<CPubModel> articulo) {
         this.articulo = articulo;
@@ -26,6 +28,7 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorFi
     public AdaptadorFirebase.ArticuloHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //return null;
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_articulo_adap,parent,false);
+        v.setOnClickListener(listener);
         AdaptadorFirebase.ArticuloHolder holder = new AdaptadorFirebase.ArticuloHolder(v);
         return holder;
     }
@@ -38,7 +41,7 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorFi
     @Override
     public void onBindViewHolder(@NonNull AdaptadorFirebase.ArticuloHolder viewHolder, int position) {
 
-        CPubModel at = articulo.get(position);
+       /* CPubModel at = articulo.get(position);
 
         viewHolder.estadoArticulo.setText(at.getEstadoArticulo());
         viewHolder.lugar.setText(at.getLugar());
@@ -59,6 +62,18 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorFi
     public int getItemCount() {
         return 0;
     }
+
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(listener!=null){
+            listener.onClick(view);
+        }
+    }
+
 
     public class ArticuloHolder extends RecyclerView.ViewHolder {
         ImageView imagenPerfil, imagenArticulo;

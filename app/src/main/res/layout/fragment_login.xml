@@ -93,7 +93,7 @@
                     android:layout_marginRight="25dp"
                     android:ems="10"
                     android:hint="@string/login_carnet_hint"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:selectAllOnFocus="false"
                     android:textColor="@color/md_white_1000"
                     android:textColorHint="@color/md_white_1000"

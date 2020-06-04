@@ -3,9 +3,9 @@ package com.alas.mutec.Api;
 public class PerfilModel {
     public int idusuario,idtipousuario;
     public String Carnet,Nombre,Apellido,Correo,Telefono_;
-    public int idcarrera,Estado,Betado,Clave;
-
-    public PerfilModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono_, int idcarrera, int estado, int betado, int clave) {
+    public int idcarrera,Estado,Betado;
+    public String Clave;
+    public PerfilModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono_, int idcarrera, int estado, int betado, String clave) {
         this.idusuario = idusuario;
         this.idtipousuario = idtipousuario;
         Carnet = carnet;
@@ -99,11 +99,11 @@ public class PerfilModel {
         Betado = betado;
     }
 
-    public int getClave() {
+    public String getClave() {
         return Clave;
     }
 
-    public void setClave(int clave) {
+    public void setClave(String clave) {
         Clave = clave;
     }
 }

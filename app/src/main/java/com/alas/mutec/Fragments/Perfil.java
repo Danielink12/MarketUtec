@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alas.mutec.Api.ApiInterface;
@@ -42,6 +43,7 @@ public class Perfil extends Fragment {
     private PreferenceHelper preferenceHelper;
     View vista;
     ApiInterface apiInterface;
+    TextView txtnombre,txtcorreo,txtcarnet,txttelefono;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -99,6 +101,10 @@ public class Perfil extends Fragment {
         // Inflate the layout for this fragment
         vista = inflater.inflate(R.layout.fragment_perfil, container, false);
         btnlogout = vista.findViewById(R.id.btnlogout);
+        txtnombre = vista.findViewById(R.id.txtNombre);
+        txtcarnet = vista.findViewById(R.id.blood_group);
+        txtcorreo = vista.findViewById(R.id.mobileNumber);
+        txttelefono =vista.findViewById(R.id.occupation);
 
 
         btnlogout.setOnClickListener(new View.OnClickListener() {
@@ -124,8 +130,8 @@ public class Perfil extends Fragment {
     }
 
     public void getP(){
-        int id =10;
-        String tokrn = "bearer"+"\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjI1LTA0NTctMjAxOCIsIm5iZiI6MTU5MDk4MDI5OCwiZXhwIjoxNTkwOTk0Njk4LCJpYXQiOjE1OTA5ODAyOTgsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDkyMjAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ5MjIwIn0.BAHl1t6Kj2_mlqi6IWpCycKM4XBuKR6d2W8HXhqbfG8 id:10\"";
+        String id =preferenceHelper.getID();
+        String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://13.66.170.249:8282/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -135,10 +141,26 @@ public class Perfil extends Fragment {
             @Override
             public void onResponse(Call<PerfilModel> call, Response<PerfilModel> response) {
                 if(response.isSuccessful()) {
-                    Log.d("oooooooooooooooooo", String.valueOf(response.code()));
+                    PerfilModel profile = response.body();
+
+                    preferenceHelper.setNombre(profile.getNombre());
+                    preferenceHelper.setApellido(profile.getApellido());
+                    preferenceHelper.setCorreo(profile.getCorreo());
+                    preferenceHelper.setTelefono(profile.getTelefono_());
+                    preferenceHelper.setCarnet(profile.getCarnet());
+                    txtnombre.setText(preferenceHelper.getNombre()+" "+preferenceHelper.getApellido());
+                    txtcarnet.setText(preferenceHelper.getCarnet());
+                    txtcorreo.setText(preferenceHelper.getCorreo());
+                    txttelefono.setText(preferenceHelper.getTelefono());
+
+
+
+                 //   Toast.makeText(getContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                 //   Log.d("poooooooooooooooooooooo", response.body().toString());
+
                 }else{
                     Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-                    Log.d("eeeeeeeeeeeeeee", String.valueOf(response.code()));
+                    Log.d("eeeeeeeeeeeeeee", response.toString());
 
                 }
             }
