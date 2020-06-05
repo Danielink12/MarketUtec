@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +28,7 @@ import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.Articulo;
 import com.alas.mutec.Api.CPubModel;
 import com.alas.mutec.Api.CarrerasModel;
+import com.alas.mutec.Api.PreferenceHelper;
 import com.alas.mutec.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,6 +56,8 @@ public class Home extends Fragment {
     AdaptadorFirebase af;
     private String mId;
     Button btnadd;
+    private PreferenceHelper preferenceHelper;
+
 
     //Region de articulos retrofit
     RecyclerView RR;
@@ -74,6 +78,7 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         vista= inflater.inflate(R.layout.fragment_home, container, false);
+        preferenceHelper = new PreferenceHelper(getContext());
         searchRootLayout    = vista.findViewById(R.id.search_root_layout);
         scrollView          = vista.findViewById(R.id.scrollView);
         recyclerView = vista.findViewById(R.id.popularItemRecyclerView);
@@ -149,8 +154,19 @@ public class Home extends Fragment {
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), AddArt.class);
-                startActivity(i);
+                if(preferenceHelper.getIsLog()) {
+                    Intent i = new Intent(getContext(), AddArt.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(getContext(), "Primer debe Loguearse", Toast.LENGTH_SHORT).show();
+                    Login nuevoFragmento = new Login();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
+                    transaction.addToBackStack(null);
+
+                    // Commit a la transacción
+                    transaction.commit();
+                }
             }
         });
 

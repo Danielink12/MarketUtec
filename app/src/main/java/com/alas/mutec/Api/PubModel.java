@@ -5,11 +5,11 @@ import java.sql.Date;
 public class PubModel {
     public int idpublicacion,idusuario,idsubcategoria;
     public String Descripcion,Titulo;
-    public Date F_Registro;
+    public String F_Registro;
     public double Precio;
     public int idtipublicacion,idcarrera,Estado;
 
-    public PubModel(int idpublicacion, int idusuario, int idsubcategoria, String descripcion, String titulo, Date f_Registro, double precio, int idtipublicacion, int idcarrera, int estado) {
+    public PubModel(int idpublicacion, int idusuario, int idsubcategoria, String descripcion, String titulo, String f_Registro, double precio, int idtipublicacion, int idcarrera, int estado) {
         this.idpublicacion = idpublicacion;
         this.idusuario = idusuario;
         this.idsubcategoria = idsubcategoria;
@@ -62,11 +62,11 @@ public class PubModel {
         Titulo = titulo;
     }
 
-    public Date getF_Registro() {
+    public String getF_Registro() {
         return F_Registro;
     }
 
-    public void setF_Registro(Date f_Registro) {
+    public void setF_Registro(String f_Registro) {
         F_Registro = f_Registro;
     }
 

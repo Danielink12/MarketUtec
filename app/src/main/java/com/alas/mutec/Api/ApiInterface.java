@@ -32,7 +32,7 @@ public interface ApiInterface {
     Call<List<SCatModel>> scat();
 
     @POST("Android/API/UsersAction/AddPublication") //pendiente
-    Call<ResponseBody> crearpub(@Body PubModel pubModel, @Body ImgPubModel imgPubModel);
+    Call<ResponseBody> crearpub(@Body CPubModel cPubModel, @Header("Authorization") String authHeader);
 
     @GET("Android/Admin/Lista")  //pendiente
     Call<List<CPubModel>> getpub();

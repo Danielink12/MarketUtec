@@ -25,19 +25,27 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alas.mutec.AddArt;
 import com.alas.mutec.Api.ApiInterface;
+import com.alas.mutec.Api.CPubModel;
 import com.alas.mutec.Api.CarrerasModel;
 import com.alas.mutec.Api.ImgPubModel;
 import com.alas.mutec.Api.LoginModel;
 import com.alas.mutec.Api.PreferenceHelper;
 import com.alas.mutec.Api.PubModel;
 import com.alas.mutec.Api.SCatModel;
+import com.alas.mutec.MainActivity;
 import com.alas.mutec.R;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -66,6 +74,9 @@ import static android.app.Activity.RESULT_OK;
  * create an instance of this fragment.
  */
 public class AddArticulo extends Fragment {
+
+    ArrayList<ImgPubModel> aimg = new ArrayList<>();
+    ImgPubModel auxaimg = new ImgPubModel();
 
     View vista;
     Spinner spinnerCarreras,subcspinner,estspinner;
@@ -198,8 +209,8 @@ public class AddArticulo extends Fragment {
         btnpub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 try {
+                    CrearPublicacion();
                     ftp4j();
                 } catch (FTPException e) {
                     e.printStackTrace();
@@ -211,6 +222,8 @@ public class AddArticulo extends Fragment {
                     e.printStackTrace();
                 } catch (FTPAbortedException e) {
                     e.printStackTrace();
+                } catch (Exception ex){
+                    ex.printStackTrace();
                 }
             }
         });
@@ -251,7 +264,14 @@ public class AddArticulo extends Fragment {
 
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path1 = cursor.getString(columnIndex);
-            Log.d("cursorrrrrrrr",path1);
+
+            String[] urls = path1.split("Download/");
+            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            auxaimg.setUrl(url);
+            auxaimg.setTitulo("Imagen 1");
+            auxaimg.setIdpublicacion(0);
+            aimg.add(auxaimg);
+
             cursor.close();
             uno.setImageURI(imageUri);
         }else if (resultCode == RESULT_OK && requestCode == dos_imagen){
@@ -263,6 +283,15 @@ public class AddArticulo extends Fragment {
 
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path2 = cursor.getString(columnIndex);
+
+            String[] urls = path2.split("Download/");
+            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            auxaimg.setUrl(url);
+            auxaimg.setTitulo("Imagen 2");
+            auxaimg.setIdpublicacion(0);
+            aimg.add(auxaimg);
+
+
             cursor.close();
             dos.setImageURI(imageUri);
         }else if (resultCode == RESULT_OK && requestCode == tres_imagen){
@@ -274,6 +303,15 @@ public class AddArticulo extends Fragment {
 
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path3 = cursor.getString(columnIndex);
+
+            String[] urls = path3.split("Download/");
+            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            auxaimg.setUrl(url);
+            auxaimg.setTitulo("Imagen 3");
+            auxaimg.setIdpublicacion(0);
+            aimg.add(auxaimg);
+
+
             cursor.close();
             tres.setImageURI(imageUri);
         }else if (resultCode == RESULT_OK && requestCode == cuatro_imagen){
@@ -285,6 +323,15 @@ public class AddArticulo extends Fragment {
 
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path4 = cursor.getString(columnIndex);
+
+            String[] urls = path4.split("Download/");
+            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            auxaimg.setUrl(url);
+            auxaimg.setTitulo("Imagen 4");
+            auxaimg.setIdpublicacion(0);
+            aimg.add(auxaimg);
+
+
             cursor.close();
             cuatro.setImageURI(imageUri);
         }else if (resultCode == RESULT_OK && requestCode == cinco_imagen){
@@ -296,6 +343,15 @@ public class AddArticulo extends Fragment {
 
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path5 = cursor.getString(columnIndex);
+
+            String[] urls = path5.split("Download/");
+            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            auxaimg.setUrl(url);
+            auxaimg.setTitulo("Imagen 5");
+            auxaimg.setIdpublicacion(0);
+            aimg.add(auxaimg);
+
+
             cursor.close();
             cinco.setImageURI(imageUri);
         }
@@ -410,29 +466,68 @@ public class AddArticulo extends Fragment {
     }
 
     public void CrearPublicacion(){
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://13.66.170.249:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        String tokn =preferenceHelper.getToken();
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //Download/
         int idpublicacion=0,idusuario=Integer.parseInt(preferenceHelper.getID()),idsubcategoria=subcspinner.getSelectedItemPosition()+1;
         String Descripcion=txtDes.getText().toString(),Titulo=txtTitulo.getText().toString();
-        Date date = null;
-        Date F_Registro=new java.sql.Date(date.getTime());
+        String F_Registro = df.format(c.getTime());
         double Precio=Integer.parseInt(txtprecio.getText().toString());
-        int idtipublicacion=0,idcarrera=preferenceHelper.getIdcarrera(),Estado=0;
-        String[] urls = path1.split("Download/");
-        String url="http://www.markutecda.info/imgmu/"+urls[1],Tituloimg="imagen de publicacion";
-        final Call<ResponseBody> cp = apiInterface.crearpub(new PubModel(idpublicacion,idusuario,idsubcategoria,Descripcion,Titulo,F_Registro,Precio,idtipublicacion,idcarrera,Estado),new ImgPubModel(idpublicacion,url,Tituloimg));
+        int idtipublicacion=0,idcarrera=preferenceHelper.getIdcarrera(),Estado=1;
+
+        Call<ResponseBody> cp = jsonPlaceHolderApi.crearpub(new CPubModel(new PubModel(idpublicacion,idusuario,idsubcategoria,Descripcion,Titulo,F_Registro,Precio,idtipublicacion,idcarrera,Estado), aimg),tokn);
         cp.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), "Publicacion creada con exito!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getContext(), MainActivity.class);
+                    startActivity(i);
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("EROOOROROROROOROR",t.toString());
+            }
+        });
+
+    }
+
+    /*
+    public void CrearPublicacion(){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //Download/
+        int idpublicacion=0,idusuario=Integer.parseInt(preferenceHelper.getID()),idsubcategoria=subcspinner.getSelectedItemPosition()+1;
+        String Descripcion=txtDes.getText().toString(),Titulo=txtTitulo.getText().toString();
+        String F_Registro = df.format(c.getTime());
+        double Precio=Integer.parseInt(txtprecio.getText().toString());
+        int idtipublicacion=0,idcarrera=preferenceHelper.getIdcarrera(),Estado=1;
+        String[] urls = path1.split("Download/");
+        String url="http://www.markutecda.info/imgmu/"+urls[1],Tituloimg="imagen de publicacion";
+         Call<String> cp = apiInterface.crearpub(new PubModel(idpublicacion,idusuario,idsubcategoria,Descripcion,Titulo,F_Registro,Precio,idtipublicacion,idcarrera,Estado),new ImgPubModel(idpublicacion,url,Tituloimg));
+        cp.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d("resposeeeee",response.toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d("errrrrrorrr",t.toString());
 
             }
         });
 
     }
+     */
 
 
 

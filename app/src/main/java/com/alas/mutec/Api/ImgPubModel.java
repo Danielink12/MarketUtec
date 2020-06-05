@@ -10,6 +10,9 @@ public class ImgPubModel {
         Titulo = titulo;
     }
 
+    public ImgPubModel() {
+    }
+
     public int getIdpublicacion() {
         return idpublicacion;
     }
