@@ -13,6 +13,8 @@ public class PreferenceHelper {
     private final String carnet="carnet";
     private final String correo="correo";
     private final String telefono="telefono";
+    private final String idcarrera="idcarrera";
+
 
 
 
@@ -102,6 +104,17 @@ public class PreferenceHelper {
     public String getTelefono(){
         return app_prefs.getString(telefono,"");
     }
+
+    public void setIdcarrera(int loginorout) {
+        SharedPreferences.Editor edit = app_prefs.edit();
+        edit.putInt(idcarrera, loginorout);
+        edit.apply();
+    }
+
+    public int getIdcarrera(){
+        return app_prefs.getInt(idcarrera,0);
+    }
+
 
 
 }

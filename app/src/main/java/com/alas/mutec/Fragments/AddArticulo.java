@@ -1,11 +1,15 @@
 package com.alas.mutec.Fragments;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -15,20 +19,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CarrerasModel;
+import com.alas.mutec.Api.ImgPubModel;
+import com.alas.mutec.Api.LoginModel;
+import com.alas.mutec.Api.PreferenceHelper;
+import com.alas.mutec.Api.PubModel;
 import com.alas.mutec.Api.SCatModel;
 import com.alas.mutec.R;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +48,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import org.jibble.simpleftp.*;
+
+
+import it.sauronsoftware.ftp4j.FTPAbortedException;
+import it.sauronsoftware.ftp4j.FTPClient;
+import it.sauronsoftware.ftp4j.FTPDataTransferException;
+import it.sauronsoftware.ftp4j.FTPDataTransferListener;
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+
 
 import static android.app.Activity.RESULT_OK;
 
@@ -50,6 +71,10 @@ public class AddArticulo extends Fragment {
     Spinner spinnerCarreras,subcspinner,estspinner;
     ImageView uno,dos,tres,cuatro,cinco;
     Button btnpub;
+    String path1,path2,path3,path4,path5;
+    ApiInterface apiInterface;
+    private PreferenceHelper preferenceHelper;
+    EditText txtDes,txtTitulo,txtprecio;
 
     private static final int uno_imagen = 100;
     private static final int dos_imagen = 200;
@@ -58,7 +83,6 @@ public class AddArticulo extends Fragment {
     private static final int cinco_imagen = 500;
 
     Uri imageUri;
-    ImageView foto_gallery;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -95,8 +119,8 @@ public class AddArticulo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferenceHelper = new PreferenceHelper(getContext());
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
         StrictMode.setThreadPolicy(policy);
 
         try {
@@ -127,6 +151,9 @@ public class AddArticulo extends Fragment {
         tres = vista.findViewById(R.id.thirdImageView);
         cuatro = vista.findViewById(R.id.fouthImageView);
         cinco = vista.findViewById(R.id.fifthImageView);
+        txtDes = vista.findViewById(R.id.etxtDescripcion);
+        txtTitulo = vista.findViewById(R.id.etxtTitulo);
+        txtprecio =vista.findViewById(R.id.etxtPrecio);
 
         uno.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +198,20 @@ public class AddArticulo extends Fragment {
         btnpub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ftpc();
+
+                try {
+                    ftp4j();
+                } catch (FTPException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FTPIllegalReplyException e) {
+                    e.printStackTrace();
+                } catch (FTPDataTransferException e) {
+                    e.printStackTrace();
+                } catch (FTPAbortedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -204,18 +244,59 @@ public class AddArticulo extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode == RESULT_OK && requestCode == uno_imagen){
             imageUri = data.getData();
+            String[] projection = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContext().getContentResolver().query(imageUri, projection, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            path1 = cursor.getString(columnIndex);
+            Log.d("cursorrrrrrrr",path1);
+            cursor.close();
             uno.setImageURI(imageUri);
         }else if (resultCode == RESULT_OK && requestCode == dos_imagen){
             imageUri = data.getData();
+            String[] projection = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContext().getContentResolver().query(imageUri, projection, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            path2 = cursor.getString(columnIndex);
+            cursor.close();
             dos.setImageURI(imageUri);
         }else if (resultCode == RESULT_OK && requestCode == tres_imagen){
             imageUri = data.getData();
+            String[] projection = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContext().getContentResolver().query(imageUri, projection, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            path3 = cursor.getString(columnIndex);
+            cursor.close();
             tres.setImageURI(imageUri);
         }else if (resultCode == RESULT_OK && requestCode == cuatro_imagen){
             imageUri = data.getData();
+            String[] projection = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContext().getContentResolver().query(imageUri, projection, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            path4 = cursor.getString(columnIndex);
+            cursor.close();
             cuatro.setImageURI(imageUri);
         }else if (resultCode == RESULT_OK && requestCode == cinco_imagen){
             imageUri = data.getData();
+            String[] projection = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContext().getContentResolver().query(imageUri, projection, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            path5 = cursor.getString(columnIndex);
+            cursor.close();
             cinco.setImageURI(imageUri);
         }
     }
@@ -298,35 +379,58 @@ public class AddArticulo extends Fragment {
         });
     }
 
-    public void ftpc(){
+    public void ftp4j() throws FTPException, IOException, FTPIllegalReplyException, FTPDataTransferException, FTPAbortedException {
 
-        try {
-            SimpleFTP ftp = new SimpleFTP();
+        FTPClient client = new FTPClient();
+        client.connect("markutecda.info", 21);
+        client.login("danielito@markutecda.info", "Hackerman12");
+        client.changeDirectory("/public_html/imgmu");
+        client.setType(FTPClient.TYPE_BINARY);
+       // String dir = client.currentDirectory();
+       // client.createDirectory("newfolder");
 
-            // Connect to an FTP server on port 21.
-            ftp.connect("13.66.170,249", 21, "angel", "abcd1234");
-
-            // Set binary mode.
-            ftp.bin();
-
-            // Change to a new working directory on the FTP server.
-            ftp.cwd("public_html/imgmu");
-
-            // Upload some files.
-            ftp.stor(new File(String.valueOf(imageUri)));
-            ftp.stor(new File("comicbot-latest.png"));
-
-            // You can also upload from an InputStream, e.g.
-           // ftp.stor(new FileInputStream(new File("test.png")), "test.png");
-           // ftp.stor(someSocket.getInputStream(), "blah.dat");
-
-            // Quit from the FTP server.
-            ftp.disconnect();
+        if(path1!=null) {
+            client.upload(new java.io.File(path1));
         }
-        catch (IOException e) {
-            Log.d("erooorrrrftpppp",e.toString());
+        if(path2!=null) {
+            client.upload(new java.io.File(path2));
         }
-        Log.d("imageeeeeeeeeee",imageUri.toString());
+        if(path3!=null) {
+            client.upload(new java.io.File(path3));
+        }
+        if(path4!=null) {
+            client.upload(new java.io.File(path4));
+        }
+        if(path5!=null) {
+            client.upload(new java.io.File(path5));
+        }
+
+        //client.upload(new java.io.File("/storage/emulated/0/ingles.pdf"));
+        client.disconnect(true);
+    }
+
+    public void CrearPublicacion(){
+        //Download/
+        int idpublicacion=0,idusuario=Integer.parseInt(preferenceHelper.getID()),idsubcategoria=subcspinner.getSelectedItemPosition()+1;
+        String Descripcion=txtDes.getText().toString(),Titulo=txtTitulo.getText().toString();
+        Date date = null;
+        Date F_Registro=new java.sql.Date(date.getTime());
+        double Precio=Integer.parseInt(txtprecio.getText().toString());
+        int idtipublicacion=0,idcarrera=preferenceHelper.getIdcarrera(),Estado=0;
+        String[] urls = path1.split("Download/");
+        String url="http://www.markutecda.info/imgmu/"+urls[1],Tituloimg="imagen de publicacion";
+        final Call<ResponseBody> cp = apiInterface.crearpub(new PubModel(idpublicacion,idusuario,idsubcategoria,Descripcion,Titulo,F_Registro,Precio,idtipublicacion,idcarrera,Estado),new ImgPubModel(idpublicacion,url,Tituloimg));
+        cp.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
 
     }
 

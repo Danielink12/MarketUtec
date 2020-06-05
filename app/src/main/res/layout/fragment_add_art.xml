@@ -307,7 +307,7 @@
                 android:text="@string/descripcionarticulo" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/etxtDescripcion"
                 android:layout_width="match_parent"
                 android:layout_height="129dp"
                 android:layout_marginStart="16dp"

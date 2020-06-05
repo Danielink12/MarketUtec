@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +44,7 @@ public class Perfil extends Fragment {
     private PreferenceHelper preferenceHelper;
     View vista;
     ApiInterface apiInterface;
-    TextView txtnombre,txtcorreo,txtcarnet,txttelefono;
+    TextView txtnombre,txtcorreo,txtcarnet,txttelefono, txtcarrera;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -82,6 +83,7 @@ public class Perfil extends Fragment {
         preferenceHelper = new PreferenceHelper(getContext());
         try {
             getP();
+            Carreras();
         }
         catch (Exception ex){
             Toast.makeText(getContext(), ex.toString(), Toast.LENGTH_SHORT).show();
@@ -105,6 +107,7 @@ public class Perfil extends Fragment {
         txtcarnet = vista.findViewById(R.id.blood_group);
         txtcorreo = vista.findViewById(R.id.mobileNumber);
         txttelefono =vista.findViewById(R.id.occupation);
+        txtcarrera = vista.findViewById(R.id.education);
 
 
         btnlogout.setOnClickListener(new View.OnClickListener() {
@@ -148,19 +151,20 @@ public class Perfil extends Fragment {
                     preferenceHelper.setCorreo(profile.getCorreo());
                     preferenceHelper.setTelefono(profile.getTelefono_());
                     preferenceHelper.setCarnet(profile.getCarnet());
+                    preferenceHelper.setIdcarrera(profile.getIdcarrera()-1);
                     txtnombre.setText(preferenceHelper.getNombre()+" "+preferenceHelper.getApellido());
                     txtcarnet.setText(preferenceHelper.getCarnet());
                     txtcorreo.setText(preferenceHelper.getCorreo());
                     txttelefono.setText(preferenceHelper.getTelefono());
 
-
-
-                 //   Toast.makeText(getContext(), response.toString(), Toast.LENGTH_SHORT).show();
-                 //   Log.d("poooooooooooooooooooooo", response.body().toString());
-
                 }else{
-                    Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-                    Log.d("eeeeeeeeeeeeeee", response.toString());
+                    Toast.makeText(getContext(), "Sesion Expirada", Toast.LENGTH_SHORT).show();
+                    preferenceHelper.logueado(false);
+                    Login nuevoFragmento = new Login();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
 
                 }
             }
@@ -173,4 +177,29 @@ public class Perfil extends Fragment {
 
 
     }
+
+    public void Carreras() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://13.66.170.249:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<CarrerasModel>> crs = jsonPlaceHolderApi.carreras();
+        crs.enqueue(new Callback<List<CarrerasModel>>() {
+            @Override
+            public void onResponse(Call<List<CarrerasModel>> call, Response<List<CarrerasModel>> response) {
+
+                List<CarrerasModel> posts = response.body();
+
+                String[] items = new String[posts.size()];
+                    txtcarrera.setText( items[preferenceHelper.getIdcarrera()] = posts.get(preferenceHelper.getIdcarrera()).getNombre());
+
+            }
+
+            @Override
+            public void onFailure(Call<List<CarrerasModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
 }
