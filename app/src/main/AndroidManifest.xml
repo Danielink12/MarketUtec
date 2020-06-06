@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/SplashTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DetalleArticulo"></activity>
+        <activity android:name=".DetalleArticulo" />
         <activity android:name=".AddArt" />
         <activity
             android:name=".MainActivity"

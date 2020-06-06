@@ -270,7 +270,7 @@ public class AddArticulo extends Fragment {
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path1 = cursor.getString(columnIndex);
             imageUriName = Uri.parse(path1);
-            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 1");
             auxaimg.setIdpublicacion(0);
@@ -289,7 +289,7 @@ public class AddArticulo extends Fragment {
             path2 = cursor.getString(columnIndex);
 
             imageUriName = Uri.parse(path1);
-            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 2");
             auxaimg.setIdpublicacion(0);
@@ -309,7 +309,7 @@ public class AddArticulo extends Fragment {
             path3 = cursor.getString(columnIndex);
 
             imageUriName = Uri.parse(path1);
-            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 3");
             auxaimg.setIdpublicacion(0);
@@ -329,7 +329,7 @@ public class AddArticulo extends Fragment {
             path4 = cursor.getString(columnIndex);
 
             imageUriName = Uri.parse(path1);
-            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 4");
             auxaimg.setIdpublicacion(0);
@@ -349,7 +349,7 @@ public class AddArticulo extends Fragment {
             path5 = cursor.getString(columnIndex);
 
             imageUriName = Uri.parse(path1);
-            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 5");
             auxaimg.setIdpublicacion(0);
@@ -442,9 +442,9 @@ public class AddArticulo extends Fragment {
     public void ftp4j() throws FTPException, IOException, FTPIllegalReplyException, FTPDataTransferException, FTPAbortedException {
 
         FTPClient client = new FTPClient();
-        client.connect("markutecda.info", 21);
-        client.login("danielito@markutecda.info", "Hackerman12");
-        client.changeDirectory("/public_html/imgmu");
+        client.connect("ftpupload.net", 21);
+        client.login("ottos_24520110", "Hackerman12");
+        client.changeDirectory("/htdocs/imgmu");
         client.setType(FTPClient.TYPE_BINARY);
        // String dir = client.currentDirectory();
        // client.createDirectory("newfolder");
@@ -466,6 +466,7 @@ public class AddArticulo extends Fragment {
         }
 
         //client.upload(new java.io.File("/storage/emulated/0/ingles.pdf"));
+        Log.d("LOGGGG","IMAGEN/ES SUBIDAS");
         client.disconnect(true);
     }
 
