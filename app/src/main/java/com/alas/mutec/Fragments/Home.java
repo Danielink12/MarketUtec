@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,10 @@ import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.Articulo;
 import com.alas.mutec.Api.CPubModel;
 import com.alas.mutec.Api.CarrerasModel;
+import com.alas.mutec.Api.PerfilModel;
 import com.alas.mutec.Api.PreferenceHelper;
+import com.alas.mutec.Api.PublicacionesGetModel;
+import com.alas.mutec.DetalleArticulo;
 import com.alas.mutec.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -74,7 +78,7 @@ public class Home extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         vista= inflater.inflate(R.layout.fragment_home, container, false);
@@ -97,15 +101,31 @@ public class Home extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1,
                 LinearLayoutManager.HORIZONTAL,false));
 
+        getPub();
+
+/*        ara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),DetalleArticulo.class);
+                intent.putExtra("idpubli", lra.get(RR.getChildAdapterPosition(view)).getPublicacion().idpublicacion);
+                startActivity(intent);
+            }
+        });*/
+
         af.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String telefono = "77474067";
+               // Toast.makeText(getContext(), lArticulo.get(recyclerView.getChildAdapterPosition(view)).getImagenPerfil(), Toast.LENGTH_SHORT).show();
+
+               Intent i = new Intent(getContext(), DetalleArticulo.class);
+               startActivity(i);
+
+              /*  String telefono = "7747-4067";
                 Toast.makeText(getContext(), lArticulo.get(recyclerView.getChildAdapterPosition(view)).getNombreArticulo(), Toast.LENGTH_SHORT).show();
                 Intent _intencion = new Intent("android.intent.action.MAIN");
                 _intencion.setComponent(new ComponentName("com.whatsapp","com.whatsapp.Conversation"));
                 _intencion.putExtra("jid", PhoneNumberUtils.stripSeparators("503" + telefono)+"@s.whatsapp.net");
-                startActivity(_intencion);
+                startActivity(_intencion);*/
             }
         });
 
@@ -196,41 +216,35 @@ public class Home extends Fragment {
         searchRootLayout.animate().translationY(moveY).setStartDelay(100).setDuration(300).start();
     }
 
-    public void Pubs(){
+    public void getPub(){
+        String id =preferenceHelper.getID();
+        String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://13.66.170.249:8282/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
-        Call<List<CPubModel>> gpub = jsonPlaceHolderApi.getpub();
-        gpub.enqueue(new Callback<List<CPubModel>>() {
+        Call<List<PublicacionesGetModel>> gp = jsonPlaceHolderApi.gpostpub();
+        gp.enqueue(new Callback<List<PublicacionesGetModel>>() {
             @Override
-            public void onResponse(Call<List<CPubModel>> call, Response<List<CPubModel>> response) {
-                List<CPubModel> pubs = response.body();
-                ara.addAllItems(pubs);
+            public void onResponse(Call<List<PublicacionesGetModel>> call, Response<List<PublicacionesGetModel>> response) {
+                List<PublicacionesGetModel> pgm = response.body();
+              //  lra.removeAll(lra);
+                //ara.addAllItems(pgm);
+                Log.d("PUUBSSSRETROFITTT",pgm.toString());
+               // ara.notifyDataSetChanged();
 
-               /* List<CPubModel> pubs = response.body();
-
-                String[] items = new String[pubs.size()];
-
-                for(int i=0; i<pubs.size(); i++){
-                    items[i] = pubs.get(i).getNombre();
-                }
-
-
-                /*lArticulo.removeAll(lArticulo);
-                for(Response response1 : response.getClass()){
-                    Articulo articulo = snapshot.getValue(Articulo.class);
-                    lArticulo.add(articulo);
-                }
-                af.notifyDataSetChanged();*/
             }
 
             @Override
-            public void onFailure(Call<List<CPubModel>> call, Throwable t) {
+            public void onFailure(Call<List<PublicacionesGetModel>> call, Throwable t) {
 
             }
         });
+
+
     }
+
+
 
 }
 

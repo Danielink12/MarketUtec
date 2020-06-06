@@ -14,12 +14,24 @@
     <color name="md_grey_700">#616161</color>
     <color name="md_red_800">#c62828</color>
     <color name="md_grey_200">#eeeeee</color>
+    <color name="md_grey_50">#fafafa</color>
+    <color name="md_grey_900">#212121</color>
+    <color name="global__primary">#D2232A</color>
+    <color name="md_blue_400">#42A5F5</color>
+    <color name="md_yellow_A700">#FFD600</color>
+    <color name="global__primary_dark">#B2160F</color>
+
+
 
 
 
     <color name="text__primary">@color/md_grey_700</color>
     <color name="textview__star_point">@color/md_red_800</color>
     <color name="view__primary_line">@color/md_grey_200</color>
+    <color name="layout__primary_background">@color/md_grey_50</color>
+    <color name="text__primary_dark">@color/md_grey_900</color>
+
+
 
 
 

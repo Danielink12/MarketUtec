@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -75,6 +76,9 @@ import static android.app.Activity.RESULT_OK;
  */
 public class AddArticulo extends Fragment {
 
+    public static final Pattern Precio = Pattern.compile("^([0-9]+.?)+([0-9])$");
+
+
     ArrayList<ImgPubModel> aimg = new ArrayList<>();
     ImgPubModel auxaimg = new ImgPubModel();
 
@@ -93,7 +97,7 @@ public class AddArticulo extends Fragment {
     private static final int cuatro_imagen = 400;
     private static final int cinco_imagen = 500;
 
-    Uri imageUri;
+    Uri imageUri,imageUriName;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -209,6 +213,7 @@ public class AddArticulo extends Fragment {
         btnpub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!ValidarPrecio()|!ValidarTitulo()|!ValidarDescripcion()|!ValidarImgen()){return;}
                 try {
                     CrearPublicacion();
                     ftp4j();
@@ -264,9 +269,8 @@ public class AddArticulo extends Fragment {
 
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path1 = cursor.getString(columnIndex);
-
-            String[] urls = path1.split("Download/");
-            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            imageUriName = Uri.parse(path1);
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 1");
             auxaimg.setIdpublicacion(0);
@@ -284,8 +288,8 @@ public class AddArticulo extends Fragment {
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path2 = cursor.getString(columnIndex);
 
-            String[] urls = path2.split("Download/");
-            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            imageUriName = Uri.parse(path1);
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 2");
             auxaimg.setIdpublicacion(0);
@@ -304,8 +308,8 @@ public class AddArticulo extends Fragment {
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path3 = cursor.getString(columnIndex);
 
-            String[] urls = path3.split("Download/");
-            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            imageUriName = Uri.parse(path1);
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 3");
             auxaimg.setIdpublicacion(0);
@@ -324,8 +328,8 @@ public class AddArticulo extends Fragment {
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path4 = cursor.getString(columnIndex);
 
-            String[] urls = path4.split("Download/");
-            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            imageUriName = Uri.parse(path1);
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 4");
             auxaimg.setIdpublicacion(0);
@@ -344,8 +348,8 @@ public class AddArticulo extends Fragment {
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path5 = cursor.getString(columnIndex);
 
-            String[] urls = path5.split("Download/");
-            String url="http://www.markutecda.info/imgmu/"+urls[1];
+            imageUriName = Uri.parse(path1);
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 5");
             auxaimg.setIdpublicacion(0);
@@ -529,6 +533,55 @@ public class AddArticulo extends Fragment {
     }
      */
 
+    public Boolean ValidarTitulo(){
+        String titulo= txtTitulo.getText().toString().trim();
 
+        if(titulo.isEmpty()){
+            txtTitulo.setError("Por favor ingrese el Titulo del articulo ");
+            return false;
+        }else{
+            txtTitulo.setError(null);
+            return true;
+        }
+
+    }
+
+    public Boolean ValidarPrecio(){
+        String precio= txtprecio.getText().toString().trim();
+
+        if(precio.isEmpty()){
+            txtprecio.setError("Por favor ingrese el precio del articulo ");
+            return false;
+        } else if(!Precio.matcher(precio).matches()){
+            txtprecio.setError("Solo se aceptan numeros y comas.");
+            return false;
+        }else{
+            txtprecio.setError(null);
+            return true;
+        }
+
+    }
+
+    public Boolean ValidarDescripcion(){
+        String descripcion= txtDes.getText().toString().trim();
+
+        if(descripcion.isEmpty()){
+            txtDes.setError("Por favor ingrese el Titulo del articulo ");
+            return false;
+        }else{
+            txtDes.setError(null);
+            return true;
+        }
+
+    } public Boolean ValidarImgen(){
+
+        if(imageUri == null){
+            Toast.makeText(getContext(), "Por favor Seleccione al menos una imagen.", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            return true;
+        }
+
+    }
 
 }

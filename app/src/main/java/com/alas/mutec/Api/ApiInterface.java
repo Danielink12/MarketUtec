@@ -34,10 +34,10 @@ public interface ApiInterface {
     @POST("Android/API/UsersAction/AddPublication") //pendiente
     Call<ResponseBody> crearpub(@Body CPubModel cPubModel, @Header("Authorization") String authHeader);
 
-    @GET("Android/Admin/Lista")  //pendiente
-    Call<List<CPubModel>> getpub();
+    @POST("Android/API/Publicaciones")  //pendiente
+    Call<List<PublicacionesGetModel>> gpostpub();
 
-    @GET("Android/API/UsersAction/Perfil/{idusuario}")  //pendiente
+    @GET("Android/API/UsersAction/Perfil/{idusuario}")
     Call<PerfilModel> getPerfil(@Path("idusuario") String idusuario, @Header("Authorization") String authHeader);
 
   //  @Headers({"Authorization", "Bearer "+ token})

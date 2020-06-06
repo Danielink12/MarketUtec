@@ -14,43 +14,44 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorFirebase.ArticuloHolder> implements View.OnClickListener  {
-    List<CPubModel> articulo;
+public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRetrofitArticulos.ArticuloHolder> implements View.OnClickListener  {
+    List<PublicacionesGetModel> articulo;
     private View.OnClickListener listener;
 
 
-    public AdaptadorRetrofitArticulos(List<CPubModel> articulo) {
+    public AdaptadorRetrofitArticulos(List<PublicacionesGetModel> articulo) {
         this.articulo = articulo;
     }
 
     @NonNull
     @Override
-    public AdaptadorFirebase.ArticuloHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdaptadorRetrofitArticulos.ArticuloHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //return null;
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_articulo_adap,parent,false);
         v.setOnClickListener(listener);
-        AdaptadorFirebase.ArticuloHolder holder = new AdaptadorFirebase.ArticuloHolder(v);
+        AdaptadorRetrofitArticulos.ArticuloHolder holder = new AdaptadorRetrofitArticulos.ArticuloHolder(v);
         return holder;
     }
 
-    public  void addAllItems(List<CPubModel> items) {
+
+    public  void addAllItems(List<PublicacionesGetModel> items) {
         articulo.addAll(items);
         notifyDataSetChanged();
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdaptadorFirebase.ArticuloHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull AdaptadorRetrofitArticulos.ArticuloHolder viewHolder, int position) {
 
-       /* CPubModel at = articulo.get(position);
+/*        PublicacionesGetModel at = articulo.get(position);
 
         viewHolder.estadoArticulo.setText(at.getEstadoArticulo());
-        viewHolder.lugar.setText(at.getLugar());
-        viewHolder.megusta.setText( at.getMegusta());
-        viewHolder.nombreArticulo.setText(at.getNombreArticulo());
+        viewHolder.lugar.setText("Utec");
+        viewHolder.megusta.setText(0);
+        viewHolder.nombreArticulo.setText(at.getTitulo());
         viewHolder.nombrePerfil.setText(at.getNombrePerfil());
-        viewHolder.precio.setText(at.getPrecio());
-        viewHolder.tiempo.setText(at.getTiempo());
-        viewHolder.vendecompra.setText(at.getVendecompra());
+        viewHolder.precio.setText("$"+String.valueOf(at.getPrecio()));
+        viewHolder.tiempo.setText(at.getF_Registro());
+        viewHolder.vendecompra.setText("De venta");
         Picasso.get().load(at.getImagenPerfil()).into(viewHolder.imagenPerfil);
         Picasso.get().load(at.getImagenArticulo()).into(viewHolder.imagenArticulo);
       /*  Picasso.with(context).load(at.getImagenArticulo()).into(viewHolder.imagenArticulo);
