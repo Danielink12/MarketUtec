@@ -65,7 +65,7 @@ public class Home extends Fragment {
 
     //Region de articulos retrofit
     RecyclerView RR;
-    List<CPubModel> lra;
+    List<PublicacionesGetModel> lra;
     AdaptadorRetrofitArticulos ara;
 
     private LinearLayout searchRootLayout;
@@ -87,6 +87,7 @@ public class Home extends Fragment {
         scrollView          = vista.findViewById(R.id.scrollView);
         recyclerView = vista.findViewById(R.id.popularItemRecyclerView);
         btnadd = vista.findViewById(R.id.addItemButton);
+        RR = vista.findViewById(R.id.popularItemRecyclerView2);
 
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -130,7 +131,7 @@ public class Home extends Fragment {
         });
 
         //Region recycler view retrofit
-      /*  lra = new ArrayList<>();
+       lra = new ArrayList<>();
         ara = new AdaptadorRetrofitArticulos(lra);
         RR.setAdapter(ara);
 
@@ -141,7 +142,7 @@ public class Home extends Fragment {
             public void onClick(View view) {
 
             }
-        }); */
+        });
 
 
         database.getReference().getRoot().addValueEventListener(new ValueEventListener() {
@@ -223,6 +224,33 @@ public class Home extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<PublicacionesGetModel>> gp = jsonPlaceHolderApi.getpubiduser(Integer.parseInt(id));
+        gp.enqueue(new Callback<List<PublicacionesGetModel>>() {
+            @Override
+            public void onResponse(Call<List<PublicacionesGetModel>> call, Response<List<PublicacionesGetModel>> response) {
+//                lra.removeAll(lra);
+                ara.addAllItems(response.body());
+
+                Log.d("PUUBSSSRETROFITTT", String.valueOf(response.body()));
+
+            }
+
+            @Override
+            public void onFailure(Call<List<PublicacionesGetModel>> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+  /*  public void getPub(){
+        String id =preferenceHelper.getID();
+        String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
         Call<List<PublicacionesGetModel>> gp = jsonPlaceHolderApi.gpostpub();
         gp.enqueue(new Callback<List<PublicacionesGetModel>>() {
             @Override
@@ -242,7 +270,7 @@ public class Home extends Fragment {
         });
 
 
-    }
+    } */
 
 
 

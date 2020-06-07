@@ -65,7 +65,7 @@ public class AdaptadorGaleria extends RecyclerView.Adapter<AdaptadorGaleria.Gale
 
     @Override
     public int getItemCount() {
-        return 0;
+        return imagenes.size();
     }
 
     public class GaleriaHolder extends RecyclerView.ViewHolder {

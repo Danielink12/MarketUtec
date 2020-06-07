@@ -23,7 +23,7 @@ import java.util.Objects;
 public class Galeria extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    List<ImgPubModel> listimagenes;
+    List<ImgPubModel> listimagenes,listaux;
     AdaptadorGaleria radapterimagenes;
     ImgPubModel auxaimg = new ImgPubModel();
 
@@ -39,6 +39,7 @@ public class Galeria extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerImg);
 
         listimagenes = new ArrayList<>();
+        listaux = new ArrayList<>();
 
         radapterimagenes = new AdaptadorGaleria(listimagenes);
 
@@ -50,19 +51,21 @@ public class Galeria extends AppCompatActivity {
         auxaimg.setIdpublicacion(1);
         auxaimg.setTitulo("imagen");
         auxaimg.setUrl("http://dpweb01.tonohost.com/imgmu/imagen.jpeg");
-        listimagenes.add(auxaimg);
+        listaux.add(auxaimg);
 
         auxaimg.setIdpublicacion(1);
         auxaimg.setTitulo("imagen");
         auxaimg.setUrl("http://dpweb01.tonohost.com/imgmu/imagen.jpeg");
-        listimagenes.add(auxaimg);
+        listaux.add(auxaimg);
 
         auxaimg.setIdpublicacion(2);
         auxaimg.setTitulo("imagen");
         auxaimg.setUrl("http://dpweb01.tonohost.com/imgmu/cover3.jpg");
-        listimagenes.add(auxaimg);
+        listaux.add(auxaimg);
 
-        radapterimagenes.addAllItems(listimagenes);
+        //listimagenes.addAll(listaux);
+
+        //radapterimagenes.addAllItems(listimagenes);
 
 
         Log.d("imagenes",listimagenes.toString());

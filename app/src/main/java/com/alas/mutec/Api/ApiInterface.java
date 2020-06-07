@@ -31,7 +31,7 @@ public interface ApiInterface {
     @GET("Android/API/Subcategorias")
     Call<List<SCatModel>> scat();
 
-    @POST("Android/API/UsersAction/AddPublication") //pendiente
+    @POST("Android/API/UsersAction/AddPublication")
     Call<ResponseBody> crearpub(@Body CPubModel cPubModel, @Header("Authorization") String authHeader);
 
     @POST("Android/API/Publicaciones")  //pendiente
@@ -39,6 +39,9 @@ public interface ApiInterface {
 
     @GET("Android/API/UsersAction/Perfil/{idusuario}")
     Call<PerfilModel> getPerfil(@Path("idusuario") String idusuario, @Header("Authorization") String authHeader);
+
+    @GET("Android/API/Publicaciones/Usuario/{id}")
+    Call<List<PublicacionesGetModel>> getpubiduser(@Path("id") int id);
 
   //  @Headers({"Authorization", "Bearer "+ token})
     //D/OkHttp: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjI1LTA0NTctMjAxOCIsIm5iZiI6MTU5MTA4MTk0NiwiZXhwIjoxNTkxMDk2MzQ2LCJpYXQiOjE1OTEwODE5NDYsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NDkyMjAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ5MjIwIn0.b2yzUrL5bqVjH1dCc6pUtH-ragsUmiq-s3N0mod130Y id:10"

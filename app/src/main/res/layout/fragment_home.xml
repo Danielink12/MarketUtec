@@ -95,10 +95,6 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="276dp" />
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/rv1"
                         android:layout_width="wrap_content"
@@ -107,7 +103,40 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/popularItemRecyclerView"
+                            android:scaleType="fitXY"
+                            android:adjustViewBounds="true"
                             android:layout_width="wrap_content"
+                            android:layout_height="350dp"
+                            android:clipToPadding="false"
+                            android:orientation="horizontal"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:spanCount="1"
+                            tools:ignore="MissingConstraints"
+                            tools:layout_editor_absoluteX="0dp"
+                            tools:layout_editor_absoluteY="0dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:background="?attr/selectableItemBackgroundBorderless">
+
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/rv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/textview16">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/popularItemRecyclerView2"
+                            android:scaleType="fitXY"
+                            android:adjustViewBounds="true"
+                            android:layout_width="match_parent"
                             android:layout_height="350dp"
                             android:clipToPadding="false"
                             android:orientation="horizontal"
@@ -131,6 +160,7 @@
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="276dp" />
+
 
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>

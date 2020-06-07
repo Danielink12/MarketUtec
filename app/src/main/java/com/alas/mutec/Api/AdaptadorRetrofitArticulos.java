@@ -61,7 +61,7 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRe
 
     @Override
     public int getItemCount() {
-        return 0;
+        return articulo.size();
     }
 
     public void setOnClickListener(View.OnClickListener listener){
