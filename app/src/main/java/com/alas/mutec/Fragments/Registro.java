@@ -246,7 +246,7 @@ public class Registro extends Fragment {
     }
 
     public void Carreras() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://13.66.170.249:8282/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
