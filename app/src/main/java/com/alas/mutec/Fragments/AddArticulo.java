@@ -213,7 +213,7 @@ public class AddArticulo extends Fragment {
         btnpub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!ValidarPrecio()|!ValidarTitulo()|!ValidarDescripcion()|!ValidarImgen()){return;}
+                if(!ValidarTitulo()|!ValidarDescripcion()|!ValidarImgen()){return;}
                 try {
                     CrearPublicacion();
                     ftp4j();
@@ -232,7 +232,6 @@ public class AddArticulo extends Fragment {
                 }
             }
         });
-
 
         return vista;
     }
@@ -270,7 +269,7 @@ public class AddArticulo extends Fragment {
             int columnIndex = cursor.getColumnIndex(projection[0]);
             path1 = cursor.getString(columnIndex);
             imageUriName = Uri.parse(path1);
-            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 1");
             auxaimg.setIdpublicacion(0);
@@ -289,7 +288,7 @@ public class AddArticulo extends Fragment {
             path2 = cursor.getString(columnIndex);
 
             imageUriName = Uri.parse(path1);
-            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 2");
             auxaimg.setIdpublicacion(0);
@@ -309,7 +308,7 @@ public class AddArticulo extends Fragment {
             path3 = cursor.getString(columnIndex);
 
             imageUriName = Uri.parse(path1);
-            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 3");
             auxaimg.setIdpublicacion(0);
@@ -329,7 +328,7 @@ public class AddArticulo extends Fragment {
             path4 = cursor.getString(columnIndex);
 
             imageUriName = Uri.parse(path1);
-            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 4");
             auxaimg.setIdpublicacion(0);
@@ -349,7 +348,7 @@ public class AddArticulo extends Fragment {
             path5 = cursor.getString(columnIndex);
 
             imageUriName = Uri.parse(path1);
-            String url="http://dpweb01.tonohost.com/imgmu/"+imageUriName.getLastPathSegment();
+            String url="http://www.markutecda.info/imgmu/"+imageUriName.getLastPathSegment();
             auxaimg.setUrl(url);
             auxaimg.setTitulo("Imagen 5");
             auxaimg.setIdpublicacion(0);
@@ -442,9 +441,9 @@ public class AddArticulo extends Fragment {
     public void ftp4j() throws FTPException, IOException, FTPIllegalReplyException, FTPDataTransferException, FTPAbortedException {
 
         FTPClient client = new FTPClient();
-        client.connect("ftpupload.net", 21);
-        client.login("ottos_24520110", "Hackerman12");
-        client.changeDirectory("/htdocs/imgmu");
+        client.connect("markutecda.info", 21);
+        client.login("danielito@markutecda.info", "Hackerman12");
+        client.changeDirectory("/public_html/imgmu");
         client.setType(FTPClient.TYPE_BINARY);
        // String dir = client.currentDirectory();
        // client.createDirectory("newfolder");
@@ -465,10 +464,15 @@ public class AddArticulo extends Fragment {
             client.upload(new java.io.File(path5));
         }
 
+        Toast.makeText(getContext(), "Publicacion agregada con exito!", Toast.LENGTH_SHORT).show();
+        Intent intent =new Intent(getContext(),MainActivity.class);
+        startActivity(intent);
+
         //client.upload(new java.io.File("/storage/emulated/0/ingles.pdf"));
         Log.d("LOGGGG","IMAGEN/ES SUBIDAS");
         client.disconnect(true);
     }
+
 
     public void CrearPublicacion(){
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
@@ -477,20 +481,20 @@ public class AddArticulo extends Fragment {
         ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
         String tokn =preferenceHelper.getToken();
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         //Download/
         int idpublicacion=0,idusuario=Integer.parseInt(preferenceHelper.getID()),idsubcategoria=subcspinner.getSelectedItemPosition()+1;
         String Descripcion=txtDes.getText().toString(),Titulo=txtTitulo.getText().toString();
         String F_Registro = df.format(c.getTime());
-        double Precio=Integer.parseInt(txtprecio.getText().toString());
-        int idtipublicacion=0,idcarrera=preferenceHelper.getIdcarrera(),Estado=1;
+        double Precio=Double.parseDouble(txtprecio.getText().toString());
+        int idtipublicacion=1,idcarrera=preferenceHelper.getIdcarrera(),Estado=1;
 
         Call<ResponseBody> cp = jsonPlaceHolderApi.crearpub(new CPubModel(new PubModel(idpublicacion,idusuario,idsubcategoria,Descripcion,Titulo,F_Registro,Precio,idtipublicacion,idcarrera,Estado), aimg),tokn);
         cp.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(getContext(), "Publicacion creada con exito!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getContext(), MainActivity.class);
                     startActivity(i);
                 }

@@ -23,8 +23,8 @@ public class AdaptadorGaleria extends RecyclerView.Adapter<AdaptadorGaleria.Gale
     private View.OnClickListener listener;
     Context context;
 
-    public AdaptadorGaleria(List<ImgPubModel> listimagenes) {
-        listimagenes = imagenes;
+    public AdaptadorGaleria(List<ImgPubModel> imagenes) {
+        this.imagenes = imagenes;
     }
 
 

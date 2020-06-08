@@ -51,7 +51,7 @@ public class PreferenceHelper {
     }
 
     public String getID(){
-        return app_prefs.getString(id,"");
+        return app_prefs.getString(id,"0");
     }
 
 

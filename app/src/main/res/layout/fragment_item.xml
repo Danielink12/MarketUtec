@@ -320,6 +320,7 @@
                                     app:layout_constraintTop_toBottomOf="@+id/ratingCountTextView" />
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/joinedTextView"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -375,7 +376,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="16dp"
                                     android:layout_marginTop="8dp"
-                                    android:text="@{item.user.overallRating}"
+                                    android:text="4.8"
                                     android:textColor="@color/text__primary"
                                     android:textSize="@dimen/font_body_size"
                                     app:layout_constraintStart_toEndOf="@+id/userImageView"
@@ -482,6 +483,7 @@
                             android:layout_height="match_parent">
 
                             <ImageView
+                                android:visibility="gone"
                                 android:id="@+id/imageView30"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
@@ -493,6 +495,7 @@
                                 app:srcCompat="@drawable/baseline_info_grey_24" />
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/informationTextView"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -510,6 +513,7 @@
                                 tools:text="Information" />
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/orderTextView"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -525,6 +529,7 @@
                                 tools:text="item car order morethan one" />
 
                             <ImageView
+                                android:visibility="gone"
                                 android:id="@+id/imageView29"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
@@ -574,6 +579,7 @@
                                 app:srcCompat="@drawable/baseline_hightlight_grey_24" />
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/brandTextView"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -607,6 +613,7 @@
                                 tools:text="HighLightInfo" />
 
                             <ImageView
+                                android:visibility="gone"
                                 android:id="@+id/imageView24"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
@@ -656,6 +663,7 @@
                                 app:srcCompat="@drawable/baseline_fav_like_grey_24" />
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/newTextView"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -672,6 +680,7 @@
                                 tools:text="New" />
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/priceTypeTextView"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -688,6 +697,7 @@
                                 tools:text="New" />
 
                             <ImageView
+                                android:visibility="gone"
                                 android:id="@+id/imageView18"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
@@ -958,28 +968,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                   <!-- <com.like.LikeButton
-                        android:id="@+id/favouriteImageView"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        app:anim_scale_factor="2"
-                        app:circle_end_color="@color/md_red_600"
-                        app:circle_start_color="@color/md_white_1000"
-                        app:dots_primary_color="@color/md_green_600"
-                        app:dots_secondary_color="@color/md_blue_300"
-                        app:icon_size="20dp"
-                        app:icon_type="heart"
-                        app:is_enabled="true"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:like_drawable="@drawable/heart_on"
-                        app:unlike_drawable="@drawable/heart_off" /> -->
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/btnBorrar"
+                        android:layout_width="70dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/rounded_corner_shape_button"
+                        android:drawableStart="@drawable/baseline_phone_grey_24"
+                        android:textColor="@color/md_white_1000"
+                        app:drawableTint="@color/md_white_1000"
+                        tools:ignore="MissingConstraints" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

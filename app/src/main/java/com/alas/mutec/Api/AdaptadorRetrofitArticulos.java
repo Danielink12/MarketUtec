@@ -15,11 +15,11 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRetrofitArticulos.ArticuloHolder> implements View.OnClickListener  {
-    List<PublicacionesGetModel> articulo;
+    List<Pubs> articulo;
     private View.OnClickListener listener;
 
 
-    public AdaptadorRetrofitArticulos(List<PublicacionesGetModel> articulo) {
+    public AdaptadorRetrofitArticulos(List<Pubs> articulo) {
         this.articulo = articulo;
     }
 
@@ -34,7 +34,7 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRe
     }
 
 
-    public  void addAllItems(List<PublicacionesGetModel> items) {
+    public  void addAllItems(List<Pubs> items) {
         articulo.addAll(items);
         notifyDataSetChanged();
     }
@@ -42,18 +42,18 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRe
     @Override
     public void onBindViewHolder(@NonNull AdaptadorRetrofitArticulos.ArticuloHolder viewHolder, int position) {
 
-/*        PublicacionesGetModel at = articulo.get(position);
+        Pubs at = articulo.get(position);
 
-        viewHolder.estadoArticulo.setText(at.getEstadoArticulo());
+        viewHolder.estadoArticulo.setText(at.getSubcategoria());
         viewHolder.lugar.setText("Utec");
-        viewHolder.megusta.setText(0);
-        viewHolder.nombreArticulo.setText(at.getTitulo());
-        viewHolder.nombrePerfil.setText(at.getNombrePerfil());
-        viewHolder.precio.setText("$"+String.valueOf(at.getPrecio()));
-        viewHolder.tiempo.setText(at.getF_Registro());
+        viewHolder.megusta.setText("0");
+        viewHolder.nombreArticulo.setText(at.publicacion.getTitulo());
+        viewHolder.nombrePerfil.setText(at.getUsuario());
+        viewHolder.precio.setText("$"+String.valueOf(at.publicacion.getPrecio()));
+        viewHolder.tiempo.setText(at.publicacion.getF_Registro());
         viewHolder.vendecompra.setText("De venta");
-        Picasso.get().load(at.getImagenPerfil()).into(viewHolder.imagenPerfil);
-        Picasso.get().load(at.getImagenArticulo()).into(viewHolder.imagenArticulo);
+        Picasso.get().load(at.getImagenusuario()).into(viewHolder.imagenPerfil);
+        Picasso.get().load(at.getPublicacionImagen()).into(viewHolder.imagenArticulo);
       /*  Picasso.with(context).load(at.getImagenArticulo()).into(viewHolder.imagenArticulo);
         Picasso.with(context).load(at.getImagenPerfil()).into(viewHolder.imagenPerfil); */
 

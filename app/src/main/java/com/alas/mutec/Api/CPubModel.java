@@ -4,11 +4,11 @@ import java.util.List;
 
 public class CPubModel {
     public PubModel publicacion;
-    public List<ImgPubModel> listImg;
+    public List<ImgPubModel> ListImg;
 
-    public CPubModel(PubModel publicacion, List<ImgPubModel> listImg) {
+    public CPubModel(PubModel publicacion, List<ImgPubModel> ListImg) {
         this.publicacion = publicacion;
-        this.listImg = listImg;
+        this.ListImg = ListImg;
     }
 
     public PubModel getPublicacion() {
@@ -20,10 +20,10 @@ public class CPubModel {
     }
 
     public List<ImgPubModel> getListImg() {
-        return listImg;
+        return ListImg;
     }
 
     public void setListImg(List<ImgPubModel> listImg) {
-        this.listImg = listImg;
+        this.ListImg = listImg;
     }
 }

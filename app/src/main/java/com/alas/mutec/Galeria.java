@@ -12,13 +12,21 @@ import android.view.View;
 import com.alas.mutec.Api.AdaptadorFirebase;
 import com.alas.mutec.Api.AdaptadorGaleria;
 import com.alas.mutec.Api.AdaptadorRetrofitArticulos;
+import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CPubModel;
 import com.alas.mutec.Api.ImgPubModel;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Galeria extends AppCompatActivity {
 
@@ -26,6 +34,7 @@ public class Galeria extends AppCompatActivity {
     List<ImgPubModel> listimagenes,listaux;
     AdaptadorGaleria radapterimagenes;
     ImgPubModel auxaimg = new ImgPubModel();
+    int idpublic;
 
 
 
@@ -35,6 +44,9 @@ public class Galeria extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_galeria);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        Bundle getidpublic = getIntent().getExtras();
+        idpublic = getidpublic.getInt("id");
+        Log.d("idididdididii", String.valueOf(idpublic));
 
         recyclerView = findViewById(R.id.recyclerImg);
 
@@ -45,10 +57,12 @@ public class Galeria extends AppCompatActivity {
 
         recyclerView.setAdapter(radapterimagenes);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this,1,
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2,
                 LinearLayoutManager.VERTICAL,false));
 
-        auxaimg.setIdpublicacion(1);
+        publicacion();
+
+    /*    auxaimg.setIdpublicacion(1);
         auxaimg.setTitulo("imagen");
         auxaimg.setUrl("http://dpweb01.tonohost.com/imgmu/imagen.jpeg");
         listaux.add(auxaimg);
@@ -68,7 +82,7 @@ public class Galeria extends AppCompatActivity {
         //radapterimagenes.addAllItems(listimagenes);
 
 
-        Log.d("imagenes",listimagenes.toString());
+        Log.d("imagenes",listimagenes.toString()); */
 
         radapterimagenes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,5 +90,25 @@ public class Galeria extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void publicacion() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<CPubModel> gp = jsonPlaceHolderApi.getidpub(idpublic);
+        gp.enqueue(new Callback<CPubModel>() {
+            @Override
+            public void onResponse(Call<CPubModel> call, Response<CPubModel> response) {
+               radapterimagenes.addAllItems(response.body().ListImg);
+            }
+
+            @Override
+            public void onFailure(Call<CPubModel> call, Throwable t) {
+                Log.d("error",t.toString());
+            }
+        });
+
     }
 }
