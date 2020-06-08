@@ -215,7 +215,8 @@ public class Registro extends Fragment {
         int idcarrera=spinnerCarreras.getSelectedItemPosition()+1,estado=1,betado=0,clave;
         String Sclave=txtPass.getText().toString();
         //clave = Integer.parseInt(Sclave);
-        Call<String> rg = apiInterface.registro(new RegistroModel(idusuario,idtipousuario,Carnet,Nombre,Apellido,Correo,Telefono,idcarrera,estado,betado,Sclave));
+        String Imagen="noimagen.jpg";
+        Call<String> rg = apiInterface.registro(new RegistroModel(idusuario,idtipousuario,Carnet,Nombre,Apellido,Correo,Telefono,idcarrera,estado,betado,Sclave,Imagen));
         rg.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

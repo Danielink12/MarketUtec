@@ -1,11 +1,15 @@
 package com.alas.mutec.Fragments;
 
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -59,6 +63,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Home extends Fragment {
 
+    private static final int MY_PERMISSIONS_REQUEST_READ_CALLPHONE = 1;
+    private static final int MY_PERMISSIONS_REQUEST_READ_STORAGE = 1;
     private View vista;
     private NestedScrollView scrollView;
     RecyclerView recyclerView;
@@ -88,6 +94,10 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         vista= inflater.inflate(R.layout.fragment_home, container, false);
+
+        PermisoLeerStorage();
+        PermisoLlamadas();
+
         preferenceHelper = new PreferenceHelper(getContext());
         searchRootLayout    = vista.findViewById(R.id.search_root_layout);
         scrollView          = vista.findViewById(R.id.scrollView);
@@ -115,8 +125,8 @@ public class Home extends Fragment {
             public void onClick(View view) {
                // Toast.makeText(getContext(), lArticulo.get(recyclerView.getChildAdapterPosition(view)).getImagenPerfil(), Toast.LENGTH_SHORT).show();
 
-               Intent i = new Intent(getContext(), DetalleArticulo.class);
-               startActivity(i);
+             //  Intent i = new Intent(getContext(), DetalleArticulo.class);
+              // startActivity(i);
 
               /*  String telefono = "7747-4067";
                 Toast.makeText(getContext(), lArticulo.get(recyclerView.getChildAdapterPosition(view)).getNombreArticulo(), Toast.LENGTH_SHORT).show();
@@ -280,6 +290,60 @@ public class Home extends Fragment {
         });
 
 
+    }
+
+    public void PermisoLlamadas(){
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.CALL_PHONE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        MY_PERMISSIONS_REQUEST_READ_CALLPHONE);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
+    }
+
+    public void PermisoLeerStorage(){
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_READ_STORAGE);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
     }
 
 

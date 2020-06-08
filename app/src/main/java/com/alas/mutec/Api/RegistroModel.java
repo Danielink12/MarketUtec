@@ -7,20 +7,22 @@ public class RegistroModel {
    public int idusuario,idtipousuario;
    public String Carnet,Nombre,Apellido,Correo,Telefono_;
    public int idcarrera,Estado,Betado;
-   public String Clave;
+   public String Clave,Imagen;
 
-    public RegistroModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono, int idcarrera, int estado, int betado, String clave) {
+
+    public RegistroModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono_, int idcarrera, int estado, int betado, String clave, String imagen) {
         this.idusuario = idusuario;
         this.idtipousuario = idtipousuario;
         Carnet = carnet;
         Nombre = nombre;
         Apellido = apellido;
         Correo = correo;
-        Telefono_ = telefono;
+        Telefono_ = telefono_;
         this.idcarrera = idcarrera;
-        this.Estado = estado;
-        this.Betado = betado;
-        this.Clave = clave;
+        Estado = estado;
+        Betado = betado;
+        Clave = clave;
+        Imagen = imagen;
     }
 
     public int getIdusuario() {
@@ -71,12 +73,12 @@ public class RegistroModel {
         Correo = correo;
     }
 
-    public String getTelefono() {
+    public String getTelefono_() {
         return Telefono_;
     }
 
-    public void setTelefono(String telefono) {
-        Telefono_ = telefono;
+    public void setTelefono_(String telefono_) {
+        Telefono_ = telefono_;
     }
 
     public int getIdcarrera() {
@@ -92,7 +94,7 @@ public class RegistroModel {
     }
 
     public void setEstado(int estado) {
-        this.Estado = estado;
+        Estado = estado;
     }
 
     public int getBetado() {
@@ -100,7 +102,7 @@ public class RegistroModel {
     }
 
     public void setBetado(int betado) {
-        this.Betado = betado;
+        Betado = betado;
     }
 
     public String getClave() {
@@ -108,10 +110,18 @@ public class RegistroModel {
     }
 
     public void setClave(String clave) {
-        this.Clave = clave;
+        Clave = clave;
     }
 
-    /* {
+    public String getImagen() {
+        return Imagen;
+    }
+
+    public void setImagen(String imagen) {
+        Imagen = imagen;
+    }
+
+/* {
          "idusuario":0,
          "idtipousuario":0,
          "Carnet":"25-2857-2018",

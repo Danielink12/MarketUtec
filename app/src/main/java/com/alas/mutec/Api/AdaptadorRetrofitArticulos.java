@@ -53,7 +53,9 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRe
         viewHolder.tiempo.setText(at.publicacion.getF_Registro());
         viewHolder.vendecompra.setText("De venta");
         Picasso.get().load(at.getImagenusuario()).into(viewHolder.imagenPerfil);
-        Picasso.get().load(at.getPublicacionImagen()).into(viewHolder.imagenArticulo);
+        if(at.getPublicacionImagen()!=null) {
+            Picasso.get().load(at.getPublicacionImagen()).into(viewHolder.imagenArticulo);
+        }
       /*  Picasso.with(context).load(at.getImagenArticulo()).into(viewHolder.imagenArticulo);
         Picasso.with(context).load(at.getImagenPerfil()).into(viewHolder.imagenPerfil); */
 
