@@ -154,6 +154,7 @@ public class Home extends Fragment {
                 intent.putExtra("user",lra.get(RR.getChildAdapterPosition(view)).getUsuario());
                 intent.putExtra("celular",lra.get(RR.getChildAdapterPosition(view)).getTelefonoUsuario());
                 intent.putExtra("iduserpub",lra.get(RR.getChildAdapterPosition(view)).publicacion.getIdusuario());
+                intent.putExtra("imagenprofile",lra.get(RR.getChildAdapterPosition(view)).getImagenusuario());
                 startActivity(intent);
             }
         });

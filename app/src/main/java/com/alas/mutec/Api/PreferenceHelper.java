@@ -30,7 +30,7 @@ public class PreferenceHelper {
         edit.apply();
     }
     public Boolean getIsLog(){
-        return app_prefs.getBoolean(Adentro,true);
+        return app_prefs.getBoolean(Adentro,false);
     }
 
     public void setToken(String loginorout) {

@@ -32,6 +32,7 @@ import com.alas.mutec.Api.Pubs;
 import com.alas.mutec.DetalleArticulo;
 import com.alas.mutec.R;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,6 +56,7 @@ public class Perfil extends Fragment {
 
     private Button btnlogout;
     private PreferenceHelper preferenceHelper;
+    CircleImageView imagenPerfil;
     View vista;
     ApiInterface apiInterface;
     TextView txtnombre,txtcorreo,txtcarnet,txttelefono, txtcarrera;
@@ -125,6 +128,7 @@ public class Perfil extends Fragment {
         txttelefono =vista.findViewById(R.id.occupation);
         txtcarrera = vista.findViewById(R.id.education);
         RR = vista.findViewById(R.id.popularItemRecyclerView);
+        imagenPerfil = vista.findViewById(R.id.profile);
 
         lra = new ArrayList<>();
         ara = new AdaptadorRetrofitArticulos(lra);
@@ -196,6 +200,13 @@ public class Perfil extends Fragment {
                     txtcarnet.setText(preferenceHelper.getCarnet());
                     txtcorreo.setText(preferenceHelper.getCorreo());
                     txttelefono.setText(preferenceHelper.getTelefono());
+                    Log.d("Imaen de perfil",profile.getImagen());
+                    if(profile.getImagen().equals("noimage.jpg")){
+                        imagenPerfil.setImageResource(R.drawable.man);
+                    }else {
+                        Picasso.get().load(profile.getImagen()).into(imagenPerfil);
+
+                    }
 
                 }else{
                     Toast.makeText(getContext(), "Sesion Expirada", Toast.LENGTH_SHORT).show();

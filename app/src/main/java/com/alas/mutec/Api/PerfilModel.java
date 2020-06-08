@@ -4,8 +4,9 @@ public class PerfilModel {
     public int idusuario,idtipousuario;
     public String Carnet,Nombre,Apellido,Correo,Telefono_;
     public int idcarrera,Estado,Betado;
-    public String Clave;
-    public PerfilModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono_, int idcarrera, int estado, int betado, String clave) {
+    public String Clave,Imagen;
+
+    public PerfilModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono_, int idcarrera, int estado, int betado, String clave, String imagen) {
         this.idusuario = idusuario;
         this.idtipousuario = idtipousuario;
         Carnet = carnet;
@@ -17,6 +18,7 @@ public class PerfilModel {
         Estado = estado;
         Betado = betado;
         Clave = clave;
+        Imagen = imagen;
     }
 
     public int getIdusuario() {
@@ -105,5 +107,13 @@ public class PerfilModel {
 
     public void setClave(String clave) {
         Clave = clave;
+    }
+
+    public String getImagen() {
+        return Imagen;
+    }
+
+    public void setImagen(String imagen) {
+        Imagen = imagen;
     }
 }

@@ -3,7 +3,7 @@ package com.alas.mutec.Api;
 public class Pubs {
 
     public PublicacionesGetModel publicacion;
-    String PublicacionImagen,Subcategoria,Usuario,Imagenusuario,TelefonoUSuario;
+    String PublicacionImagen,Subcategoria,Usuario,ImagenUsuario,TelefonoUSuario;
 
     public Pubs() {
     }
@@ -13,7 +13,7 @@ public class Pubs {
         PublicacionImagen = publicacionImagen;
         Subcategoria = subcategoria;
         Usuario = usuario;
-        Imagenusuario = imagenusuario;
+        ImagenUsuario = imagenusuario;
         TelefonoUSuario = telefonoUsuario;
     }
 
@@ -50,11 +50,11 @@ public class Pubs {
     }
 
     public String getImagenusuario() {
-        return Imagenusuario;
+        return ImagenUsuario;
     }
 
     public void setImagenusuario(String imagenusuario) {
-        Imagenusuario = imagenusuario;
+        ImagenUsuario = imagenusuario;
     }
 
     public String getTelefonoUsuario() {

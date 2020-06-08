@@ -35,6 +35,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,10 +54,12 @@ public class Detalle_Articulo extends Fragment {
     int idpublic,iduserpub;
     ImageView imageView;
     ArrayList<String> imageUrls = new ArrayList<String>();
-    String img,subcat,user,cel;
+    String img,subcat,user,cel,imagenprofile;
     TextView txtnombreArticulo,txtHora,txtPrecio,txtLike,txtSCategoria,txtDescripcion,txtCompraVenta,txtUser,txtCel,txtContadorFotos;
     Button btnBorrar,btnWhatsapp,btnLlamada;
     private PreferenceHelper preferenceHelper;
+    CircleImageView imagenPerfil;
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -101,6 +104,7 @@ public class Detalle_Articulo extends Fragment {
         user = getidpublic.getString("user");
         cel = getidpublic.getString("celular");
         iduserpub = getidpublic.getInt("iduserpub");
+        imagenprofile =  getidpublic.getString("imagenprofile");
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -127,6 +131,7 @@ public class Detalle_Articulo extends Fragment {
         btnWhatsapp = vista.findViewById(R.id.chatButton);
         btnLlamada = vista.findViewById(R.id.callButton);
         txtContadorFotos = vista.findViewById(R.id.photoCountTextView);
+        imagenPerfil = vista.findViewById(R.id.userImageView);
 
         Log.d("cel",cel);
 
@@ -219,6 +224,11 @@ public class Detalle_Articulo extends Fragment {
                 txtUser.setText(user);
                 txtCel.setText(cel);
                 txtContadorFotos.setText(response.body().ListImg.size()+" Fotos");
+                if(imagenprofile.equals("noimage.jpg")){
+                    Picasso.get().load(R.drawable.man).into(imagenPerfil);
+                }else{
+                    Picasso.get().load(imagenprofile).into(imagenPerfil);
+                }
 
                 Picasso.get().load(img).into(imageView);
                 //Glide.with(getContext()).load(cpm.listImg.get().getUrl()).into(imageView);

@@ -32,13 +32,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileCircleImageView"
                     android:layout_width="@dimen/space_36"
                     android:layout_height="@dimen/space_36"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:contentDescription="imagen de perfil"
+                    android:src="@drawable/default_image"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/circle_default_image" />
