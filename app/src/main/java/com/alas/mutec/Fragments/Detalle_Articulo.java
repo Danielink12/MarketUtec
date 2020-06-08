@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
@@ -22,7 +23,9 @@ import android.widget.Toast;
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CPubModel;
 import com.alas.mutec.Api.ParametroPubs;
+import com.alas.mutec.Api.PerfilModel;
 import com.alas.mutec.Api.PreferenceHelper;
+import com.alas.mutec.Api.PubModel;
 import com.alas.mutec.Api.Pubs;
 import com.alas.mutec.Galeria;
 import com.alas.mutec.MainActivity;
@@ -52,14 +55,16 @@ public class Detalle_Articulo extends Fragment {
 
     View vista;
     int idpublic,iduserpub;
-    ImageView imageView;
+    ImageView imageView,imgMarcarVendido;
     ArrayList<String> imageUrls = new ArrayList<String>();
     String img,subcat,user,cel,imagenprofile;
-    TextView txtnombreArticulo,txtHora,txtPrecio,txtLike,txtSCategoria,txtDescripcion,txtCompraVenta,txtUser,txtCel,txtContadorFotos;
+    TextView txtnombreArticulo,txtHora,txtPrecio,txtLike,txtSCategoria,txtDescripcion,txtCompraVenta,txtUser,txtCel,txtContadorFotos,txtMarcarVendido,txtVendidorojo;
     Button btnBorrar,btnWhatsapp,btnLlamada;
     private PreferenceHelper preferenceHelper;
     CircleImageView imagenPerfil;
-
+    PerfilModel pm = new PerfilModel();
+    String url;
+    PubModel getinfopub = new PubModel();
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -132,6 +137,9 @@ public class Detalle_Articulo extends Fragment {
         btnLlamada = vista.findViewById(R.id.callButton);
         txtContadorFotos = vista.findViewById(R.id.photoCountTextView);
         imagenPerfil = vista.findViewById(R.id.userImageView);
+        txtMarcarVendido =vista.findViewById(R.id.informationTextView);
+        imgMarcarVendido = vista.findViewById(R.id.imageView30);
+        txtVendidorojo = vista.findViewById(R.id.soldTextView);
 
         Log.d("cel",cel);
 
@@ -139,8 +147,32 @@ public class Detalle_Articulo extends Fragment {
         if(preferenceHelper.getID()!=null) {
             if (iduserpub == Integer.parseInt(preferenceHelper.getID())) {
                 btnBorrar.setVisibility(View.VISIBLE);
+                txtMarcarVendido.setVisibility(View.VISIBLE);
+                imgMarcarVendido.setVisibility(View.VISIBLE);
             }
         }
+
+        txtMarcarVendido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(getContext())
+                        //.setIcon(R.drawable.alacran)
+                        .setTitle("¿Realmente desea marcar como vendido este articulo?")
+                        .setCancelable(false)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    MarcarVendido();
+                                }
+                                catch (Exception ex){
+                                    Log.d("Errorazno alv",ex.toString());
+                                }
+                            }
+                        }).show();
+            }
+        });
 
         btnWhatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,7 +236,6 @@ public class Detalle_Articulo extends Fragment {
     }
 
     public void publicacion() {
-        int a = 0, b = 0, c = 0, d = 50, e = 0;
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -214,6 +245,7 @@ public class Detalle_Articulo extends Fragment {
             @Override
             public void onResponse(Call<CPubModel> call, Response<CPubModel> response) {
                 CPubModel cpm = response.body();
+                getinfopub = response.body().publicacion;
                 txtnombreArticulo.setText(cpm.publicacion.getTitulo());
                 txtHora.setText(cpm.publicacion.getF_Registro());
                 txtPrecio.setText("$"+String.valueOf(cpm.publicacion.getPrecio()));
@@ -223,11 +255,21 @@ public class Detalle_Articulo extends Fragment {
                 txtCompraVenta.setText("De venta");
                 txtUser.setText(user);
                 txtCel.setText(cel);
-                txtContadorFotos.setText(response.body().ListImg.size()+" Fotos");
+                if(response.body().ListImg.size()>1){
+                    txtContadorFotos.setText(response.body().ListImg.size()+" Fotos");
+
+                }else{
+                    txtContadorFotos.setText(response.body().ListImg.size()+" Foto");
+
+                }
                 if(imagenprofile.equals("noimage.jpg")){
                     Picasso.get().load(R.drawable.man).into(imagenPerfil);
                 }else{
                     Picasso.get().load(imagenprofile).into(imagenPerfil);
+                }
+
+                if(cpm.publicacion.getEstado()!=1){
+                    txtVendidorojo.setVisibility(View.VISIBLE);
                 }
 
                 Picasso.get().load(img).into(imageView);
@@ -262,6 +304,24 @@ public class Detalle_Articulo extends Fragment {
 
             }
         });
+
+    }
+
+    public void MarcarVendido(){
+        String id =preferenceHelper.getID();
+        String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+
+        int idpublicacion = getinfopub.getIdpublicacion(),idusuario=getinfopub.getIdusuario(),idsubcategoria=getinfopub.getIdsubcategoria();
+        String Descripcion=getinfopub.getDescripcion(),Titulo=getinfopub.getTitulo();
+        String F_Registro=getinfopub.getF_Registro();
+        double Precio=getinfopub.getPrecio();
+        int idtipublicacion=getinfopub.getIdtipublicacion(),idcarrera=getinfopub.getIdcarrera(),Estado=0;
+        Call<ResponseBody> gp = jsonPlaceHolderApi.actualizarpublicacion(new PubModel(idpublicacion,idusuario,idsubcategoria,Descripcion,Titulo,F_Registro,Precio,idtipublicacion,idcarrera,Estado),tokrn);
+
 
     }
 

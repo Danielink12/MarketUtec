@@ -9,6 +9,9 @@ public class PubModel {
     public double Precio;
     public int idtipublicacion,idcarrera,Estado;
 
+    public PubModel() {
+    }
+
     public PubModel(int idpublicacion, int idusuario, int idsubcategoria, String descripcion, String titulo, String f_Registro, double precio, int idtipublicacion, int idcarrera, int estado) {
         this.idpublicacion = idpublicacion;
         this.idusuario = idusuario;

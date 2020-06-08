@@ -6,6 +6,9 @@ public class CPubModel {
     public PubModel publicacion;
     public List<ImgPubModel> ListImg;
 
+    public CPubModel() {
+    }
+
     public CPubModel(PubModel publicacion, List<ImgPubModel> ListImg) {
         this.publicacion = publicacion;
         this.ListImg = ListImg;

@@ -1,15 +1,21 @@
 package com.alas.mutec.Fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +36,12 @@ import com.alas.mutec.Api.PreferenceHelper;
 import com.alas.mutec.Api.PublicacionesGetModel;
 import com.alas.mutec.Api.Pubs;
 import com.alas.mutec.DetalleArticulo;
+import com.alas.mutec.MainActivity;
 import com.alas.mutec.R;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,11 +49,19 @@ import java.util.Collections;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import it.sauronsoftware.ftp4j.FTPAbortedException;
+import it.sauronsoftware.ftp4j.FTPClient;
+import it.sauronsoftware.ftp4j.FTPDataTransferException;
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,6 +76,10 @@ public class Perfil extends Fragment {
     View vista;
     ApiInterface apiInterface;
     TextView txtnombre,txtcorreo,txtcarnet,txttelefono, txtcarrera;
+    PerfilModel pm = new PerfilModel();
+    private static final int uno_imagen = 100;
+    Uri imageUri,imageUriName;
+    String path1,url;
 
     RecyclerView RR;
     List<Pubs> lra;
@@ -100,6 +120,8 @@ public class Perfil extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         preferenceHelper = new PreferenceHelper(getContext());
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         try {
             getP();
             Carreras();
@@ -152,19 +174,65 @@ public class Perfil extends Fragment {
             }
         });
 
+        imagenPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(getContext())
+                        //.setIcon(R.drawable.alacran)
+                        .setTitle("¿Realmente desea actualizar su foto de perfil?")
+                        .setCancelable(false)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                                    startActivityForResult(gallery, uno_imagen);
+                                }
+                                catch (Exception ex){
+                                    Log.d("Errorazno alv",ex.toString());
+                                }
+                            }
+                        }).show();
+            }
+        });
+
 
 
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                preferenceHelper.logueado(false);
 
-                Login nuevoFragmento = new Login();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                new AlertDialog.Builder(getContext())
+                        //.setIcon(R.drawable.alacran)
+                        .setTitle("¿Realmente desea cerrar la sesion actual?")
+                        .setCancelable(false)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    preferenceHelper.logueado(false);
+                                    preferenceHelper.setToken("tokrn");
+                                    preferenceHelper.setID("0");
+                                    preferenceHelper.setNombre("nombre");
+                                    preferenceHelper.setApellido("apellido");
+                                    preferenceHelper.setCorreo("correo");
+                                    preferenceHelper.setTelefono("telefono");
+                                    preferenceHelper.setCarnet("carnet");
+                                    preferenceHelper.setIdcarrera(0);
 
+                                    Login nuevoFragmento = new Login();
+                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                }
+                                catch (Exception ex){
+                                    Log.d("Errorazno alv",ex.toString());
+                                }
+                            }
+                        }).show();
 
                 /*
                 Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
@@ -189,6 +257,7 @@ public class Perfil extends Fragment {
             public void onResponse(Call<PerfilModel> call, Response<PerfilModel> response) {
                 if(response.isSuccessful()) {
                     PerfilModel profile = response.body();
+                    pm = response.body();
 
                     preferenceHelper.setNombre(profile.getNombre());
                     preferenceHelper.setApellido(profile.getApellido());
@@ -317,5 +386,88 @@ public class Perfil extends Fragment {
 
 
     }
+
+    public void ActualizarFotoPerfil(){
+        String id =preferenceHelper.getID();
+        String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+
+        int idusuario = pm.getIdusuario(),idtipousuario=pm.getIdtipousuario();
+        String Carnet=pm.getCarnet(),Nombre=pm.getNombre(),Apellido=pm.getApellido(),Correo=pm.getCorreo(),Telefono=pm.getTelefono_();
+        int idcarrera=pm.getIdcarrera(),Estado=pm.getEstado(),Betado=pm.getBetado();
+        String Clave="",Imagen=url;
+        Call<ResponseBody> gp = jsonPlaceHolderApi.actualizarfotoperfil(new PerfilModel(idusuario,idtipousuario,Carnet,Nombre,Apellido,Correo,Telefono,idcarrera,Estado,Betado,Clave,Imagen),tokrn);
+        gp.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d("responsefotoperfil", String.valueOf(response.body()));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("eerror foto perfil",t.toString());
+            }
+        });
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == uno_imagen) {
+            imageUri = data.getData();
+            String[] projection = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContext().getContentResolver().query(imageUri, projection, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            path1 = cursor.getString(columnIndex);
+            imageUriName = Uri.parse(path1);
+            url = "http://www.markutecda.info/imgmu/" + imageUriName.getLastPathSegment();
+
+            cursor.close();
+            imagenPerfil.setImageURI(imageUri);
+            try {
+                ActualizarFotoPerfil();
+                ftp4j();
+            } catch (FTPException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (FTPIllegalReplyException e) {
+                e.printStackTrace();
+            } catch (FTPDataTransferException e) {
+                e.printStackTrace();
+            } catch (FTPAbortedException e) {
+                e.printStackTrace();
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void ftp4j() throws FTPException, IOException, FTPIllegalReplyException, FTPDataTransferException, FTPAbortedException {
+
+        FTPClient client = new FTPClient();
+        client.connect("markutecda.info", 21);
+        client.login("danielito@markutecda.info", "Hackerman12");
+        client.changeDirectory("/public_html/imgmu");
+        client.setType(FTPClient.TYPE_BINARY);
+        // String dir = client.currentDirectory();
+        // client.createDirectory("newfolder");
+
+        if(path1!=null) {
+            client.upload(new java.io.File(path1));
+        }
+
+        Toast.makeText(getContext(), "Foto de perfil actualizada!", Toast.LENGTH_SHORT).show();
+
+        //client.upload(new java.io.File("/storage/emulated/0/ingles.pdf"));
+        Log.d("LOGGGG","IMAGEN/ES SUBIDAS");
+        client.disconnect(true);
+    }
+
 
 }

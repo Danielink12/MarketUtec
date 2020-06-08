@@ -6,6 +6,9 @@ public class PerfilModel {
     public int idcarrera,Estado,Betado;
     public String Clave,Imagen;
 
+    public PerfilModel() {
+    }
+
     public PerfilModel(int idusuario, int idtipousuario, String carnet, String nombre, String apellido, String correo, String telefono_, int idcarrera, int estado, int betado, String clave, String imagen) {
         this.idusuario = idusuario;
         this.idtipousuario = idtipousuario;

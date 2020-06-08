@@ -52,6 +52,11 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRe
         viewHolder.precio.setText("$"+String.valueOf(at.publicacion.getPrecio()));
         viewHolder.tiempo.setText(at.publicacion.getF_Registro());
         viewHolder.vendecompra.setText("De venta");
+        if(at.publicacion.getEstado()==1){
+            viewHolder.Vendido.setVisibility(View.INVISIBLE);
+        }else{
+            viewHolder.Vendido.setVisibility(View.VISIBLE);
+        }
         if(at.getImagenusuario().equals("noimage.jpg")){
             Picasso.get().load(R.drawable.man).into(viewHolder.imagenPerfil);
         }else{
@@ -89,6 +94,7 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRe
         TextView precio;
         TextView lugar,vendecompra,estadoArticulo;
         TextView megusta;
+        TextView Vendido;
 
         public ArticuloHolder(@NonNull View articulo_adaptador) {
             super(articulo_adaptador);
@@ -102,6 +108,7 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRe
             vendecompra = articulo_adaptador.findViewById(R.id.itemTypeNameTextView);
             estadoArticulo = articulo_adaptador.findViewById(R.id.conditionTextView);
             this.megusta = articulo_adaptador.findViewById(R.id.favCountTextView);
+            Vendido =  articulo_adaptador.findViewById(R.id.isSoldTextView);
         }
     }
 }
