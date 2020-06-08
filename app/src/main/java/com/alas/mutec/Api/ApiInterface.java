@@ -41,7 +41,7 @@ public interface ApiInterface {
     Call<PerfilModel> getPerfil(@Path("idusuario") String idusuario, @Header("Authorization") String authHeader);
 
     @GET("Android/API/Publicaciones/Usuario/{id}")
-    Call<List<PublicacionesGetModel>> getpubiduser(@Path("id") int id);
+    Call<List<Pubs>> getpubiduser(@Path("id") int id);
 
     @GET("Android/API/Publicacion/{id}")
     Call<CPubModel> getidpub(@Path("id") int id);

@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,15 +19,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alas.mutec.Api.AdaptadorRetrofitArticulos;
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CarrerasModel;
 import com.alas.mutec.Api.IDModel;
 import com.alas.mutec.Api.LoginModel;
+import com.alas.mutec.Api.ParametroPubs;
 import com.alas.mutec.Api.PerfilModel;
 import com.alas.mutec.Api.PreferenceHelper;
+import com.alas.mutec.Api.PublicacionesGetModel;
+import com.alas.mutec.Api.Pubs;
+import com.alas.mutec.DetalleArticulo;
 import com.alas.mutec.R;
 import com.google.gson.JsonObject;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,6 +57,10 @@ public class Perfil extends Fragment {
     View vista;
     ApiInterface apiInterface;
     TextView txtnombre,txtcorreo,txtcarnet,txttelefono, txtcarrera;
+
+    RecyclerView RR;
+    List<Pubs> lra;
+    AdaptadorRetrofitArticulos ara;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -108,6 +124,30 @@ public class Perfil extends Fragment {
         txtcorreo = vista.findViewById(R.id.mobileNumber);
         txttelefono =vista.findViewById(R.id.occupation);
         txtcarrera = vista.findViewById(R.id.education);
+        RR = vista.findViewById(R.id.popularItemRecyclerView);
+
+        lra = new ArrayList<>();
+        ara = new AdaptadorRetrofitArticulos(lra);
+        RR.setAdapter(ara);
+
+        RR.setLayoutManager(new GridLayoutManager(getContext(),1, LinearLayoutManager.HORIZONTAL,false));
+
+        getPub();
+
+        ara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), DetalleArticulo.class);
+                intent.putExtra("idpubli", lra.get(RR.getChildAdapterPosition(view)).getPublicacion().idpublicacion);
+                intent.putExtra("img",lra.get(RR.getChildAdapterPosition(view)).getPublicacionImagen());
+                intent.putExtra("subcat",lra.get(RR.getChildAdapterPosition(view)).getSubcategoria());
+                intent.putExtra("user",lra.get(RR.getChildAdapterPosition(view)).getUsuario());
+                intent.putExtra("celular",lra.get(RR.getChildAdapterPosition(view)).getTelefonoUsuario());
+                intent.putExtra("iduserpub",lra.get(RR.getChildAdapterPosition(view)).publicacion.getIdusuario());
+                startActivity(intent);
+            }
+        });
+
 
 
         btnlogout.setOnClickListener(new View.OnClickListener() {
@@ -200,6 +240,71 @@ public class Perfil extends Fragment {
 
             }
         });
+    }
+
+    public void getPub_(){
+        int a=0,b=0,c=0,d=50,e=0;
+        String id =preferenceHelper.getID();
+        String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<Pubs>> gp = jsonPlaceHolderApi.gpostpub(new ParametroPubs(a,b,c,d,e));
+        gp.enqueue(new Callback<List<Pubs>>() {
+            @Override
+            public void onResponse(Call<List<Pubs>> call, Response<List<Pubs>> response) {
+                // if(lra!=null){
+                List<Pubs> reverse = response.body();
+                Collections.reverse(reverse);
+
+
+                ara.addAllItems(reverse);
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String F_Registro = df.format(c.getTime());
+                Log.d("HORRARARARARArA",F_Registro);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Pubs>> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    public void getPub(){
+        String id =preferenceHelper.getID();
+        String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<Pubs>> gp = jsonPlaceHolderApi.getpubiduser(Integer.parseInt(id));
+        gp.enqueue(new Callback<List<Pubs>>() {
+            @Override
+            public void onResponse(Call<List<Pubs>> call, Response<List<Pubs>> response) {
+//                lra.removeAll(lra);
+                List<Pubs> reverse = response.body();
+                Collections.reverse(reverse);
+
+
+                ara.addAllItems(reverse);
+
+                Log.d("PUUBSSSRETROFITTT", String.valueOf(response.body()));
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Pubs>> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
 }

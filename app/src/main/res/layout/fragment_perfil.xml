@@ -14,6 +14,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:id="@+id/layout">
 
 
@@ -102,12 +103,13 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/info"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/profile_layout"
                 android:layout_margin="5dp"
                 android:layout_marginTop="5dp"
-                android:background="#fff"
+                android:background="@color/md_grey_200"
                 android:elevation="4dp"
                 android:orientation="vertical"
                 android:paddingTop="20dp"
@@ -232,9 +234,97 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView22"
                     android:text="Cerrar Sesion" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/tema"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/btnlogout"
+                    >
 
+                    <TextView
+                        android:id="@+id/popularViewAllTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="@dimen/space_20"
+                        android:animateLayoutChanges="true"
+                        android:gravity="center"
+                        android:text="Ver mas"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_body_s_size"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/popularTitleTextView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/popularTitleTextView"
+                        tools:text="Ver mas" />
+
+                    <TextView
+                        android:id="@+id/popularTitleTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:animateLayoutChanges="true"
+                        android:text="Mis Articulos"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_h6_size"
+                        app:layout_constraintEnd_toStartOf="@+id/popularViewAllTextView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textview16"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="Mi lista de articulos"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_body_size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/popularTitleTextView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/rv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/tema"
+                    tools:ignore="MissingConstraints">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/popularItemRecyclerView"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="350dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="1"
+                        tools:ignore="MissingConstraints"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="0dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:background="?attr/selectableItemBackgroundBorderless">
+
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
+
     </ScrollView>
 
 </FrameLayout>
