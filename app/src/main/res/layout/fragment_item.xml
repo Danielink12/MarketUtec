@@ -935,6 +935,7 @@
                     android:background="@drawable/rounded_corner_shape_button"
                     android:text="@string/item_detail__chat"
                     android:textColor="@color/md_white_1000"
+                    android:drawableStart="@drawable/w4"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/callButton"

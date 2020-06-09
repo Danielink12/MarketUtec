@@ -109,7 +109,7 @@ public class Detalle_Articulo extends Fragment {
         user = getidpublic.getString("user");
         cel = getidpublic.getString("celular");
         iduserpub = getidpublic.getInt("iduserpub");
-        imagenprofile =  getidpublic.getString("imagenprofile");
+        imagenprofile = getidpublic.getString("imagenprofile");
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -321,7 +321,21 @@ public class Detalle_Articulo extends Fragment {
         double Precio=getinfopub.getPrecio();
         int idtipublicacion=getinfopub.getIdtipublicacion(),idcarrera=getinfopub.getIdcarrera(),Estado=0;
         Call<ResponseBody> gp = jsonPlaceHolderApi.actualizarpublicacion(new PubModel(idpublicacion,idusuario,idsubcategoria,Descripcion,Titulo,F_Registro,Precio,idtipublicacion,idcarrera,Estado),tokrn);
+        gp.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), "Se ha marcado como vendido", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(),MainActivity.class);
+                    startActivity(intent);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("errirrrrr",t.toString());
+            }
+        });
 
     }
 
