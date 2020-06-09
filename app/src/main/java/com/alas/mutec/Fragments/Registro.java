@@ -1,11 +1,6 @@
 package com.alas.mutec.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,24 +10,21 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.alas.mutec.Api.ApiClient;
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CarrerasModel;
 import com.alas.mutec.Api.RegistroModel;
-import com.alas.mutec.MainActivity;
 import com.alas.mutec.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 

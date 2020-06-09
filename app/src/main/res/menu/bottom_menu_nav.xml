@@ -16,6 +16,7 @@
 
 
     <item android:id="@+id/more"
+        android:visible="false"
         android:title="Buscar"
         app:showAsAction="always"
         android:orderInCategory="2"

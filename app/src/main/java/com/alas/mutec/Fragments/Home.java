@@ -2,10 +2,16 @@ package com.alas.mutec.Fragments;
 
 
 import android.Manifest;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -17,26 +23,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.telephony.PhoneNumberUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import com.alas.mutec.AddArt;
 import com.alas.mutec.Api.AdaptadorFirebase;
 import com.alas.mutec.Api.AdaptadorRetrofitArticulos;
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.Articulo;
-import com.alas.mutec.Api.CPubModel;
-import com.alas.mutec.Api.CarrerasModel;
 import com.alas.mutec.Api.ParametroPubs;
-import com.alas.mutec.Api.PerfilModel;
 import com.alas.mutec.Api.PreferenceHelper;
-import com.alas.mutec.Api.PublicacionesGetModel;
 import com.alas.mutec.Api.Pubs;
 import com.alas.mutec.DetalleArticulo;
 import com.alas.mutec.R;
@@ -45,7 +38,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -80,6 +72,18 @@ public class Home extends Fragment {
     List<Pubs> lra;
     AdaptadorRetrofitArticulos ara;
 
+    RecyclerView RR2;
+    List<Pubs> lra2;
+    AdaptadorRetrofitArticulos ara2;
+
+    RecyclerView RR3;
+    List<Pubs> lra3;
+    AdaptadorRetrofitArticulos ara3;
+
+    RecyclerView RR4;
+    List<Pubs> lra4;
+    AdaptadorRetrofitArticulos ara4;
+
     private LinearLayout searchRootLayout;
 
 
@@ -104,23 +108,28 @@ public class Home extends Fragment {
         recyclerView = vista.findViewById(R.id.popularItemRecyclerView);
         btnadd = vista.findViewById(R.id.addItemButton);
         RR = vista.findViewById(R.id.popularItemRecyclerView2);
+        RR3 = vista.findViewById(R.id.RR3);
+        RR4 = vista.findViewById(R.id.RR4);
 
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        lArticulo = new ArrayList<>();
+      //  lArticulo = new ArrayList<>();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        af = new AdaptadorFirebase(lArticulo);
+        //af = new AdaptadorFirebase(lArticulo);
 
-        recyclerView.setAdapter(af);
+        //recyclerView.setAdapter(af);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1,
-                LinearLayoutManager.HORIZONTAL,false));
+        //recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1,
+          //      LinearLayoutManager.HORIZONTAL,false));
 
-        getPub_();
+        getPub25();
+        getPub50();
+        getPubPC();
+        getPubIngSis();
 
-        af.setOnClickListener(new View.OnClickListener() {
+       /* af.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                // Toast.makeText(getContext(), lArticulo.get(recyclerView.getChildAdapterPosition(view)).getImagenPerfil(), Toast.LENGTH_SHORT).show();
@@ -133,34 +142,96 @@ public class Home extends Fragment {
                 Intent _intencion = new Intent("android.intent.action.MAIN");
                 _intencion.setComponent(new ComponentName("com.whatsapp","com.whatsapp.Conversation"));
                 _intencion.putExtra("jid", PhoneNumberUtils.stripSeparators("503" + telefono)+"@s.whatsapp.net");
-                startActivity(_intencion);*/
+                startActivity(_intencion);
             }
-        });
+        });*/
 
         //Region recycler view retrofit
        lra = new ArrayList<>();
         ara = new AdaptadorRetrofitArticulos(lra);
-        RR.setAdapter(ara);
+        recyclerView.setAdapter(ara);
 
-        RR.setLayoutManager(new GridLayoutManager(getContext(),1,LinearLayoutManager.HORIZONTAL,false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1,LinearLayoutManager.HORIZONTAL,false));
 
         ara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(),DetalleArticulo.class);
-                intent.putExtra("idpubli", lra.get(RR.getChildAdapterPosition(view)).getPublicacion().idpublicacion);
-                intent.putExtra("img",lra.get(RR.getChildAdapterPosition(view)).getPublicacionImagen());
-                intent.putExtra("subcat",lra.get(RR.getChildAdapterPosition(view)).getSubcategoria());
-                intent.putExtra("user",lra.get(RR.getChildAdapterPosition(view)).getUsuario());
-                intent.putExtra("celular",lra.get(RR.getChildAdapterPosition(view)).getTelefonoUsuario());
-                intent.putExtra("iduserpub",lra.get(RR.getChildAdapterPosition(view)).publicacion.getIdusuario());
-                intent.putExtra("imagenprofile",lra.get(RR.getChildAdapterPosition(view)).getImagenusuario());
+                intent.putExtra("idpubli", lra.get(recyclerView.getChildAdapterPosition(view)).getPublicacion().idpublicacion);
+                intent.putExtra("img",lra.get(recyclerView.getChildAdapterPosition(view)).getPublicacionImagen());
+                intent.putExtra("subcat",lra.get(recyclerView.getChildAdapterPosition(view)).getSubcategoria());
+                intent.putExtra("user",lra.get(recyclerView.getChildAdapterPosition(view)).getUsuario());
+                intent.putExtra("celular",lra.get(recyclerView.getChildAdapterPosition(view)).getTelefonoUsuario());
+                intent.putExtra("iduserpub",lra.get(recyclerView.getChildAdapterPosition(view)).publicacion.getIdusuario());
+                intent.putExtra("imagenprofile",lra.get(recyclerView.getChildAdapterPosition(view)).getImagenusuario());
                 startActivity(intent);
             }
         });
 
+        lra2 = new ArrayList<>();
+        ara2 = new AdaptadorRetrofitArticulos(lra2);
+        RR.setAdapter(ara2);
 
-        database.getReference().getRoot().addValueEventListener(new ValueEventListener() {
+        RR.setLayoutManager(new GridLayoutManager(getContext(),1,LinearLayoutManager.HORIZONTAL,false));
+
+        ara2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),DetalleArticulo.class);
+                intent.putExtra("idpubli", lra2.get(RR.getChildAdapterPosition(view)).getPublicacion().idpublicacion);
+                intent.putExtra("img",lra2.get(RR.getChildAdapterPosition(view)).getPublicacionImagen());
+                intent.putExtra("subcat",lra2.get(RR.getChildAdapterPosition(view)).getSubcategoria());
+                intent.putExtra("user",lra2.get(RR.getChildAdapterPosition(view)).getUsuario());
+                intent.putExtra("celular",lra2.get(RR.getChildAdapterPosition(view)).getTelefonoUsuario());
+                intent.putExtra("iduserpub",lra2.get(RR.getChildAdapterPosition(view)).publicacion.getIdusuario());
+                intent.putExtra("imagenprofile",lra2.get(RR.getChildAdapterPosition(view)).getImagenusuario());
+                startActivity(intent);
+            }
+        });
+
+        lra3 = new ArrayList<>();
+        ara3 = new AdaptadorRetrofitArticulos(lra3);
+        RR3.setAdapter(ara3);
+
+        RR3.setLayoutManager(new GridLayoutManager(getContext(),1,LinearLayoutManager.HORIZONTAL,false));
+
+        ara3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),DetalleArticulo.class);
+                intent.putExtra("idpubli", lra3.get(RR3.getChildAdapterPosition(view)).getPublicacion().idpublicacion);
+                intent.putExtra("img",lra3.get(RR3.getChildAdapterPosition(view)).getPublicacionImagen());
+                intent.putExtra("subcat",lra3.get(RR3.getChildAdapterPosition(view)).getSubcategoria());
+                intent.putExtra("user",lra3.get(RR3.getChildAdapterPosition(view)).getUsuario());
+                intent.putExtra("celular",lra3.get(RR3.getChildAdapterPosition(view)).getTelefonoUsuario());
+                intent.putExtra("iduserpub",lra3.get(RR3.getChildAdapterPosition(view)).publicacion.getIdusuario());
+                intent.putExtra("imagenprofile",lra3.get(RR3.getChildAdapterPosition(view)).getImagenusuario());
+                startActivity(intent);
+            }
+        });
+
+        lra4 = new ArrayList<>();
+        ara4 = new AdaptadorRetrofitArticulos(lra4);
+        RR4.setAdapter(ara4);
+
+        RR4.setLayoutManager(new GridLayoutManager(getContext(),1,LinearLayoutManager.HORIZONTAL,false));
+
+        ara4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),DetalleArticulo.class);
+                intent.putExtra("idpubli", lra4.get(RR4.getChildAdapterPosition(view)).getPublicacion().idpublicacion);
+                intent.putExtra("img",lra4.get(RR4.getChildAdapterPosition(view)).getPublicacionImagen());
+                intent.putExtra("subcat",lra4.get(RR4.getChildAdapterPosition(view)).getSubcategoria());
+                intent.putExtra("user",lra4.get(RR4.getChildAdapterPosition(view)).getUsuario());
+                intent.putExtra("celular",lra4.get(RR4.getChildAdapterPosition(view)).getTelefonoUsuario());
+                intent.putExtra("iduserpub",lra4.get(RR4.getChildAdapterPosition(view)).publicacion.getIdusuario());
+                intent.putExtra("imagenprofile",lra4.get(RR4.getChildAdapterPosition(view)).getImagenusuario());
+                startActivity(intent);
+            }
+        });
+
+       /* database.getReference().getRoot().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 lArticulo.removeAll(lArticulo);
@@ -175,7 +246,7 @@ public class Home extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        }); */
 
         //DatabaseReference referencia = database.getReference("marketutec");
 
@@ -259,10 +330,10 @@ public class Home extends Fragment {
 
     }*/
 
-    public void getPub_(){
+    public void getPub25(){
         int a=0,b=0,c=0,d=50,e=0;
-        String id =preferenceHelper.getID();
-        String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
+       // String id =preferenceHelper.getID();
+       // String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -277,6 +348,37 @@ public class Home extends Fragment {
 
 
                 ara.addAllItems(reverse);
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Pubs>> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    public void getPub50(){
+        int a=0,b=0,c=0,d=25,e=25;
+        // String id =preferenceHelper.getID();
+        // String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<Pubs>> gp = jsonPlaceHolderApi.gpostpub(new ParametroPubs(a,b,c,d,e));
+        gp.enqueue(new Callback<List<Pubs>>() {
+            @Override
+            public void onResponse(Call<List<Pubs>> call, Response<List<Pubs>> response) {
+                // if(lra!=null){
+                List<Pubs> reverse = response.body();
+                Collections.reverse(reverse);
+
+
+                ara2.addAllItems(reverse);
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String F_Registro = df.format(c.getTime());
@@ -292,6 +394,67 @@ public class Home extends Fragment {
 
 
     }
+
+    public void getPubPC(){
+        int a=8,b=0,c=0,d=25,e=0;
+        // String id =preferenceHelper.getID();
+        // String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<Pubs>> gp = jsonPlaceHolderApi.gpostpub(new ParametroPubs(a,b,c,d,e));
+        gp.enqueue(new Callback<List<Pubs>>() {
+            @Override
+            public void onResponse(Call<List<Pubs>> call, Response<List<Pubs>> response) {
+                // if(lra!=null){
+                List<Pubs> reverse = response.body();
+                Collections.reverse(reverse);
+
+
+                ara3.addAllItems(reverse);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Pubs>> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    public void getPubIngSis(){
+        int a=0,b=0,c=1,d=25,e=0;
+        // String id =preferenceHelper.getID();
+        // String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://104.215.72.31:8282/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface jsonPlaceHolderApi = retrofit.create(ApiInterface.class);
+        Call<List<Pubs>> gp = jsonPlaceHolderApi.gpostpub(new ParametroPubs(a,b,c,d,e));
+        gp.enqueue(new Callback<List<Pubs>>() {
+            @Override
+            public void onResponse(Call<List<Pubs>> call, Response<List<Pubs>> response) {
+                // if(lra!=null){
+                List<Pubs> reverse = response.body();
+                Collections.reverse(reverse);
+
+
+                ara4.addAllItems(reverse);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Pubs>> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
 
     public void PermisoLlamadas(){
         if (ContextCompat.checkSelfPermission(getActivity(),

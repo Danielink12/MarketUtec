@@ -60,12 +60,11 @@ public class AdaptadorRetrofitArticulos extends RecyclerView.Adapter<AdaptadorRe
         if(at.getImagenusuario().equals("noimage.jpg")){
             Picasso.get().load(R.drawable.man).into(viewHolder.imagenPerfil);
         }else{
-            Picasso.get().load(at.getImagenusuario()).into(viewHolder.imagenPerfil);
+            Picasso.get().load(at.getImagenusuario()).resize(50,50).into(viewHolder.imagenPerfil);
         }
         //Picasso.get().load(at.getImagenusuario()).into(viewHolder.imagenPerfil);
-        if(at.getPublicacionImagen()!="noimage.jpg") {
-            Picasso.get().load(at.getPublicacionImagen()).into(viewHolder.imagenArticulo);
-        }
+            Picasso.get().load(at.getPublicacionImagen()).resize(175,175).into(viewHolder.imagenArticulo);
+
       /*  Picasso.with(context).load(at.getImagenArticulo()).into(viewHolder.imagenArticulo);
         Picasso.with(context).load(at.getImagenPerfil()).into(viewHolder.imagenPerfil); */
 

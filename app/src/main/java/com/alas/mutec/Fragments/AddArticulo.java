@@ -2,15 +2,8 @@ package com.alas.mutec.Fragments;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,50 +15,38 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alas.mutec.AddArt;
+import androidx.fragment.app.Fragment;
+
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CPubModel;
 import com.alas.mutec.Api.CarrerasModel;
 import com.alas.mutec.Api.ImgPubModel;
-import com.alas.mutec.Api.LoginModel;
 import com.alas.mutec.Api.PreferenceHelper;
 import com.alas.mutec.Api.PubModel;
 import com.alas.mutec.Api.SCatModel;
 import com.alas.mutec.MainActivity;
 import com.alas.mutec.R;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import it.sauronsoftware.ftp4j.FTPAbortedException;
+import it.sauronsoftware.ftp4j.FTPClient;
+import it.sauronsoftware.ftp4j.FTPDataTransferException;
+import it.sauronsoftware.ftp4j.FTPException;
+import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import org.jibble.simpleftp.*;
-
-
-import it.sauronsoftware.ftp4j.FTPAbortedException;
-import it.sauronsoftware.ftp4j.FTPClient;
-import it.sauronsoftware.ftp4j.FTPDataTransferException;
-import it.sauronsoftware.ftp4j.FTPDataTransferListener;
-import it.sauronsoftware.ftp4j.FTPException;
-import it.sauronsoftware.ftp4j.FTPIllegalReplyException;
-
 
 import static android.app.Activity.RESULT_OK;
 

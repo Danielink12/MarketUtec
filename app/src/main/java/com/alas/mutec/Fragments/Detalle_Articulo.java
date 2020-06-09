@@ -5,11 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,23 +15,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CPubModel;
-import com.alas.mutec.Api.ParametroPubs;
 import com.alas.mutec.Api.PerfilModel;
 import com.alas.mutec.Api.PreferenceHelper;
 import com.alas.mutec.Api.PubModel;
-import com.alas.mutec.Api.Pubs;
 import com.alas.mutec.Galeria;
 import com.alas.mutec.MainActivity;
 import com.alas.mutec.R;
-import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
@@ -265,7 +257,7 @@ public class Detalle_Articulo extends Fragment {
                 if(imagenprofile.equals("noimage.jpg")){
                     Picasso.get().load(R.drawable.man).into(imagenPerfil);
                 }else{
-                    Picasso.get().load(imagenprofile).into(imagenPerfil);
+                    Picasso.get().load(imagenprofile).resize(175,175).into(imagenPerfil);
                 }
 
                 if(cpm.publicacion.getEstado()!=1){

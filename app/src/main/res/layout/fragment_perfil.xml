@@ -293,7 +293,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/rv1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/tema"
                     tools:ignore="MissingConstraints">
@@ -303,7 +303,7 @@
                         android:scaleType="fitXY"
                         android:adjustViewBounds="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="350dp"
+                        android:layout_height="wrap_content"
                         android:clipToPadding="false"
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
@@ -324,6 +324,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </RelativeLayout>
 
     </ScrollView>

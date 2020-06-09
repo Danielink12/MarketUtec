@@ -5,8 +5,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,31 +22,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.StrictMode;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.alas.mutec.Api.AdaptadorRetrofitArticulos;
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.CarrerasModel;
-import com.alas.mutec.Api.IDModel;
-import com.alas.mutec.Api.LoginModel;
 import com.alas.mutec.Api.ParametroPubs;
 import com.alas.mutec.Api.PerfilModel;
 import com.alas.mutec.Api.PreferenceHelper;
-import com.alas.mutec.Api.PublicacionesGetModel;
 import com.alas.mutec.Api.Pubs;
 import com.alas.mutec.DetalleArticulo;
-import com.alas.mutec.MainActivity;
 import com.alas.mutec.R;
-import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -324,7 +316,7 @@ public class Perfil extends Fragment {
         });
     }
 
-    public void getPub_(){
+   /* public void getPub_(){
         int a=0,b=0,c=0,d=50,e=0;
         String id =preferenceHelper.getID();
         String tokrn = "Bearer "+preferenceHelper.getToken().replace("\"","");
@@ -356,7 +348,7 @@ public class Perfil extends Fragment {
         });
 
 
-    }
+    }*/
 
     public void getPub(){
         String id =preferenceHelper.getID();

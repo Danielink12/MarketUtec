@@ -1,12 +1,6 @@
 package com.alas.mutec.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,28 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.alas.mutec.Api.ApiClient;
 import com.alas.mutec.Api.ApiInterface;
 import com.alas.mutec.Api.LoginModel;
 import com.alas.mutec.Api.PreferenceHelper;
-import com.alas.mutec.Api.RegistroModel;
-import com.alas.mutec.Api.User;
-import com.alas.mutec.MainActivity;
 import com.alas.mutec.R;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.gson.stream.JsonToken;
 
 import java.util.regex.Pattern;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.GET;
 
 /**
  * A simple {@link Fragment} subclass.
