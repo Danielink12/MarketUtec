@@ -57,7 +57,7 @@
                             android:textAllCaps="true"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/font_body_s_size"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             app:layout_constraintBottom_toBottomOf="@+id/popularTitleTextView"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/popularTitleTextView"

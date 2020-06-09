@@ -944,7 +944,7 @@
 
                 <Button
                     android:id="@+id/callButton"
-                    android:layout_width="70dp"
+                    android:layout_width="95dp"
                     android:layout_height="35dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
