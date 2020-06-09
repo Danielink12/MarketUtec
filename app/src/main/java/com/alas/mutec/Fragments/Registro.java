@@ -50,7 +50,7 @@ public class Registro extends Fragment {
 
     ApiInterface apiInterface;
     View vista;
-    TextInputEditText txtNombre,txtApellidos,txtCarnet,txtMail,txtTelefono,txtPass;
+    TextInputEditText txtNombre,txtApellidos,txtCarnet,txtMail,txtTelefono,txtPass,txtPass2;
     Button Rbtn;
     TextView txtbtn, txtResponse;
     Spinner spinnerCarreras;
@@ -120,13 +120,14 @@ public class Registro extends Fragment {
         Rbtn = vista.findViewById(R.id.Rbtn);
         txtbtn = vista.findViewById(R.id.txtbtn);
         spinnerCarreras = vista.findViewById(R.id.spinnerCarreras);
+        txtPass2 = vista.findViewById(R.id.txtPass2);
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         Rbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!ValidarNombre()|!ValidarApellido()|!ValidarCarnet()|!ValidarCorreo()|!ValidarTelefono()|!ValidarPassword()){return;}
+                if(!ValidarNombre()|!ValidarApellido()|!ValidarCarnet()|!ValidarCorreo()|!ValidarTelefono()|!ValidarPassword()|!ValidarPassword2()){return;}
                 registro();
             }
         });
@@ -365,6 +366,25 @@ public class Registro extends Fragment {
             return false;
         }else{
             txtPass.setError(null);
+            return true;
+        }
+
+    }
+
+    public Boolean ValidarPassword2(){
+        String pass2 = txtPass2.getText().toString().trim();
+        String pass = txtPass.getText().toString().trim();
+
+
+        if(pass2.isEmpty()){
+            txtPass2.setError("Por favor nuevamente ingrese su numero password");
+            return false;
+
+        }else if(!pass.equals(pass2)){
+            txtPass2.setError("Los passwords no coinciden");
+            return false;
+        }else{
+            txtPass2.setError(null);
             return true;
         }
 
